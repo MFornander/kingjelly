@@ -1,4 +1,5 @@
 #include "AdcController.h"
+#include "math.h"
 
 
 float ClampInput(BlackADC& adc)
@@ -12,6 +13,10 @@ float ClampInput(BlackADC& adc)
 		value = 1800.0f;
 	if (value < 50.0f)
 		value = 0;
+
+	// quantize the result into bins
+
+
 
 	// Return an inverted value from 0.0 to 1.0 such that
 	// leftmost (ccw) is 0, and rightmost (cw) is 1.
@@ -30,10 +35,12 @@ AdcController::AdcController() :
 
 void AdcController::Update()
 {
-	mAnalog[0] = ClampInput(mAIN4);
-	mAnalog[1] = ClampInput(mAIN6);
-	mAnalog[2] = ClampInput(mAIN2);
-	mAnalog[3] = ClampInput(mAIN0);
+
+
+	mAnalog[0] = DeJitter(mAnalog[0], ClampInput(mAIN4));
+	mAnalog[1] = DeJitter(mAnalog[1], ClampInput(mAIN6));
+	mAnalog[2] = DeJitter(mAnalog[2], ClampInput(mAIN2));
+	mAnalog[3] = DeJitter(mAnalog[3], ClampInput(mAIN0));
 
 	mDigital[0] = ClampInput(mAIN1) > 0.5f;
 	mDigital[1] = ClampInput(mAIN3) > 0.5f;
@@ -41,4 +48,18 @@ void AdcController::Update()
 	mEnabled = (mAnalog[0] + mAnalog[1] + mAnalog[2] + mAnalog[3]) < 4.0f;
 }
 
+float AdcController::DeJitter(float current, float input)
+{
+
+//	printf("%f %f %f %f\n", current, input, fabs(current-input), mHysteresis);
+
+	if(fabs(current-input) > mHysteresis)
+	{
+		return(input);
+	}
+	else
+	{
+		return(current);
+	}
+}
 
