@@ -36,10 +36,10 @@ RainEffect::RainEffect() :
 
 void RainEffect::beginFrame(const FrameInfo& frame)
 {
-	mMod   = 90 + (int)(Input(0)*255.0);
-	mHue   = Input(1);
- 	mSpeed = (int) ((1.0 - Input(2)) * 20) + 1;
- 	mLen   = (int) (Input(3)*50) + 1;
+	mMod   = 90;// + (int)(Input(0)*255.0);
+	mHue   = Input(0);
+ 	mSpeed = (int) ((1.0 - Input(1)) * 20) + 1;
+ 	mLen   = (int) (Input(2)*50) + 1;
 	mOffset++;
 }
 
@@ -50,10 +50,10 @@ void RainEffect::shader(Vec3& rgb, const PixelInfo& pixel) const
 	uint32_t off = (mOffset/(int)mSpeed) % JellyPixel::kLedCount;
 
 	// distance from the center pixel of the wave
-    int distance = ABS(min(mod(pos - off, JellyPixel::kLedCount),
+	int distance = ABS(min(mod(pos - off, JellyPixel::kLedCount),
 	        	           mod(off - pos, JellyPixel::kLedCount)));
 
-    // get dimmer based on distance from center
+	// get dimmer based on distance from center
 	float wave = max(0.0, (mLen-distance)/(double)mLen);
 
 	/*
@@ -62,7 +62,7 @@ void RainEffect::shader(Vec3& rgb, const PixelInfo& pixel) const
     		printf("%d %d %d (%d = %d, %d = %d) %d %f\n", 
     		       mOffset, pos, off, (pos - off),  mod(pos - off,100), 
     		       off - pos, mod(off - pos, 100), distance,wave);
-    */
+	*/
 
 	hsv2rgb(rgb, mHue, 1.0f, wave);
 

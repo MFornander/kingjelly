@@ -6,33 +6,33 @@
 SerialController::SerialController(const string& serialDevicePath) :
 	BaseController("Serial"),
 	mFileDescriptor(open(serialDevicePath.c_str(), O_RDONLY | O_NOCTTY | O_NDELAY)),
-	mLastCommandSecond(0)
+	mLastCommandTime(0)
 {}
 
 /// Refresh all inputs by processing any pending serial lines
-void SerialController::Update()
+void SerialController::Update(uint32_t seconds, bool verbose)
 {
 	 if (mFileDescriptor < 0)
 		 return;
 
 	char command[256];
 	ssize_t readCount = read(mFileDescriptor, command, 255);
-	timeval now;
-	gettimeofday(&now, 0);
-
 	if (readCount <= 0)
 	{
 		// Disable if no data was received in 5 seconds
-		const time_t kSecondsUntilDisable = 5;
-		if ((now.tv_sec - mLastCommandSecond) >= kSecondsUntilDisable)
+		const uint32_t kSecondsUntilDisable = 5;
+		if ((seconds - mLastCommandTime) >= kSecondsUntilDisable && mEnabled)
+		{
 			mEnabled = false;
+			fprintf(stdout, "SerialController: Timeout");
+		}
 	}
 	else
 	{
-		command[255] = 0;
-		fprintf(stdout, "SerialController command: %s", command);
+		command[readCount] = 0;
+		if (verbose)
+			fprintf(stdout, "SerialController: command '%s'", command);
 		ExecuteCommand(command);
-		mEnabled = true;
-		mLastCommandSecond = now.tv_sec;
+		mLastCommandTime = seconds;
 	}
 }

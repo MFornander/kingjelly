@@ -5,9 +5,9 @@ class SerialController: public BaseController
 {
 public:
 	SerialController(const string& serialDevicePath);
-	virtual void Update();
+	virtual void Update(uint32_t seconds, bool verbose);
 
 private:
-	int mFileDescriptor;
-	time_t mLastCommandSecond;
+	int       mFileDescriptor;
+	uint32_t  mLastCommandTime;
 };

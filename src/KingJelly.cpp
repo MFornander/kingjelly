@@ -20,6 +20,7 @@ bool ReleaseButton(const BaseController& controller, uint32_t buttonIndex)
 	return clickRelease;
 }
 
+// Select which controller should be active
 BaseController& GetController(bool verbose)
 {
 	static SerialController serialController("/dev/ttyO5");
@@ -27,18 +28,21 @@ BaseController& GetController(bool verbose)
 	static AutoController autoController;
 	static BaseController* lastController = nullptr;
 
+        timeval now;
+        gettimeofday(&now, 0);
+
 	BaseController* newController;
-	serialController.Update();
+	serialController.Update(now.tv_sec, verbose);
 	if (serialController.IsEnabled())
 		newController = &serialController;
 	else
 	{
-		netController.Update();
+		netController.Update(now.tv_sec, verbose);
 		if (netController.IsEnabled())
 			newController = &netController;
 		else
 		{
-			autoController.Update();
+			autoController.Update(now.tv_sec, verbose);
 			newController = &autoController;
 		}
 	}
@@ -46,7 +50,8 @@ BaseController& GetController(bool verbose)
 	if (lastController != newController)
 	{
 		lastController = newController;
-		fprintf(stdout, "New Controller: %s\n", lastController->GetName().c_str());
+		if (verbose)
+			fprintf(stdout, "New Controller: %s\n", lastController->GetName().c_str());
 	}
 
 	return *newController;
@@ -97,5 +102,5 @@ int main(int argc, char** argv)
 		runner.doFrame();
 	}
 
-    return 0;
+	return 0;
 }

@@ -8,5 +8,8 @@ class AutoController: public BaseController
 {
 public:
 	AutoController();
-	virtual void Update();
+	virtual void Update(uint32_t seconds, bool verbose);
+
+private:
+	uint32_t mLastSwitchTime;
 };

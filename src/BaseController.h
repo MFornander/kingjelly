@@ -10,7 +10,7 @@ public:
 	virtual ~BaseController();
 
 	/// Called every frame before calling Digital or Analog
-	virtual void Update() = 0;
+	virtual void Update(uint32_t seconds, bool verbose) = 0;
 
 	/// Return true if this controller is active
 	const string& GetName() const;
