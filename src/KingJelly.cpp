@@ -3,6 +3,7 @@
 #include "NetworkController.h"
 #include "KeyboardController.h"
 #include "AdcController.h"
+#include "AutoController.h"
 #include "EffectManager.h"
 #include "JellyEffect.h"
 
@@ -21,15 +22,33 @@ bool ReleaseButton(const BaseController& controller, uint32_t buttonIndex)
 	return clickRelease;
 }
 
+BaseController& GetController()
+{
+	static AdcController adcController;
+	adcController.Update();
+	if (adcController.IsEnabled())
+		return adcController;
+
+	static KeyboardController keyController;
+	keyController.Update();
+	if (keyController.IsEnabled())
+		return keyController;
+
+	static NetworkController netController;
+	netController.Update();
+	if (adcController.IsEnabled())
+		return netController;
+
+	static AutoController autoController;
+	autoController.Update();
+	return autoController;
+}
+
 int main(int argc, char** argv)
 {
 	// System components
 	EffectManager manager;
 	EffectRunner runner;
-
-	AdcController adcController;
-	KeyboardController keyController;
-	NetworkController netController;
 
     // Defaults, overridable with command line options
 	runner.setMaxFrameRate(300);
@@ -39,9 +58,8 @@ int main(int argc, char** argv)
 
 	while (true)
 	{
-		// TODO: Select controller based on 'enabled' reading
-		BaseController& controller = keyController;
-		controller.Update();
+		// Select controller based on 'enabled' reading
+		BaseController& controller = GetController();
 
 		// Switch to next or previous effect?
 		if (ReleaseButton(controller, 0))
