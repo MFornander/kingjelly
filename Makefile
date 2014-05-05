@@ -1,15 +1,18 @@
 CXXFLAGS =	-O2 -g -Wall -fmessage-length=0
-
-OBJS =		jellybrain.o
-
-LIBS =
-
+SOURCES =   jellybrain.cpp $(wildcard src/*.cpp)
+OBJS =		$(SOURCES:.cpp=.o)
 TARGET =	jellybrain
 
-$(TARGET):	$(OBJS)
-	$(CXX) -o $(TARGET) $(OBJS) $(LIBS)
-
-all:	$(TARGET)
+all:	$(SOURCES) $(TARGET)
 
 clean:
 	rm -f $(OBJS) $(TARGET)
+
+$(TARGET):	$(OBJS)
+	$(CXX) $(OBJS) -o $@
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+
+
