@@ -24,8 +24,7 @@ DIST_BTWN_LEDS = LEN_STRAND/NUM_LEDS
 lines = []
 
 # Arrange the strands in a circular pattern around the y axis for RADIUS_H
-for delta in map(radians,range(0,360,360/NUM_STRANDS)):
-
+for delta in map(radians, [x * 360.0/NUM_STRANDS for x in range(NUM_STRANDS)]):
     # per led on a strand, draw a 90d arc with RADIUS_V and then a vertical part
     for t in [l * DIST_BTWN_LEDS for l in range(NUM_LEDS)]:
         theta = t  /  RADIUS_H
