@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/DefaultEffect.cpp \
+../src/RainEffect.cpp \
 ../src/EffectManager.cpp \
 ../src/IState.cpp \
 ../src/KeyboardState.cpp \
@@ -12,6 +13,7 @@ CPP_SRCS += \
 
 OBJS += \
 ./src/DefaultEffect.o \
+./src/RainEffect.o \
 ./src/EffectManager.o \
 ./src/IState.o \
 ./src/KeyboardState.o \
@@ -19,6 +21,7 @@ OBJS += \
 
 CPP_DEPS += \
 ./src/DefaultEffect.d \
+./src/RainEffect.d \
 ./src/EffectManager.d \
 ./src/IState.d \
 ./src/KeyboardState.d \

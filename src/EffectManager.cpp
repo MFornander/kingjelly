@@ -1,5 +1,7 @@
 #include "EffectManager.h"
 #include "DefaultEffect.h"
+#include "RainEffect.h"
+
 
 EffectManager::EffectManager()
 {
@@ -17,5 +19,6 @@ void EffectManager::SetState(const IState&)
 Effect* EffectManager::GetEffect() const
 {
 	static DefaultEffect defaultEffect;
-	return &defaultEffect;
+	static RainEffect    rainEffect;
+	return &rainEffect;
 }
