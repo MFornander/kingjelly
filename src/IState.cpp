@@ -7,7 +7,8 @@
 
 #include <src/IState.h>
 
-IState::IState() {
+IState::IState():m_pots(4,1.0) {
+
 	// TODO Auto-generated constructor stub
 
 }

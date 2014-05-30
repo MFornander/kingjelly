@@ -1,6 +1,6 @@
 #include "DefaultEffect.h"
+#include "InputEffect.h"
 #include "lib/color.h"
-#include "lib/effect.h"
 #include "lib/effect_runner.h"
 #include "lib/noise.h"
 

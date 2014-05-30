@@ -9,6 +9,7 @@ CPP_SRCS += \
 ../src/EffectManager.cpp \
 ../src/IState.cpp \
 ../src/KeyboardState.cpp \
+../src/NetworkState.cpp \
 ../src/KingJelly.cpp 
 
 OBJS += \
@@ -17,6 +18,7 @@ OBJS += \
 ./src/EffectManager.o \
 ./src/IState.o \
 ./src/KeyboardState.o \
+./src/NetworkState.o \
 ./src/KingJelly.o 
 
 CPP_DEPS += \
@@ -25,6 +27,7 @@ CPP_DEPS += \
 ./src/EffectManager.d \
 ./src/IState.d \
 ./src/KeyboardState.d \
+./src/NetworkState.d \
 ./src/KingJelly.d 
 
 

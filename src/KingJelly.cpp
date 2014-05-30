@@ -1,12 +1,12 @@
 #include "KingJelly.h"
-#include "KeyboardState.h"
+#include "NetworkState.h"
 #include "EffectManager.h"
 #include "lib/effect_runner.h"
 
 
 int main(int argc, char** argv)
 {
-	KeyboardState state;
+	NetworkState state;
 	EffectManager manager;
 	EffectRunner runner;
 
@@ -19,6 +19,7 @@ int main(int argc, char** argv)
 	Effect* currentEffect = nullptr;
 	while(true)
 	{
+		state.Update();
 		manager.SetState(state);
 		Effect* newEffect = manager.GetEffect();
 		if (newEffect != currentEffect)

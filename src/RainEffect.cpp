@@ -13,15 +13,25 @@
 
 RainEffect::RainEffect() :
 	offset (0),
-	noise  (1.5)
+	noise  (1.5),
+	hue (0.5)
 {}
+
+void RainEffect::setState(const IState& state)
+{
+	noise = 1.0 + state.Pot(0);
+	hue   = state.Pot(1);
+
+}
+
 
 void RainEffect::beginFrame(const FrameInfo& frame)
 {
 	// advance down the strand 
 	offset++;
-	//offset %= NUM_LEDS_PER_STRAND;
+	
 }
+
 
 void RainEffect::shader(Vec3& rgb, const PixelInfo& pixel) const
 {
@@ -36,7 +46,7 @@ void RainEffect::shader(Vec3& rgb, const PixelInfo& pixel) const
     // get dimmer based on distance from center
 	float wave = std::max(0.0,(10-distance)/10.0);
 
-	hsv2rgb(rgb, 0.5, 1.0, wave);
+	hsv2rgb(rgb, hue, 1.0, wave);
 
 }
 
