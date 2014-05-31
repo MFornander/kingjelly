@@ -1,25 +1,21 @@
-#ifndef RAINEFFECT_H_
-#define RAINEFFECT_H_
+#pragma once
+#include "JellyEffect.h"
 
-#include "InputEffect.h"
-#include "IState.h"
-
-
-class RainEffect : public InputEffect
+/**
+ * TODO: Effect description */
+class RainEffect : public JellyEffect
 {
 public:
-	RainEffect();
+	static JellyEffect* Create();
 
 	virtual void beginFrame(const FrameInfo& frame);
 	virtual void shader(Vec3& rgb, const PixelInfo& pixel) const;
 
-	virtual void setState(const IState& state);
-
-
 private:
-	int   offset;
-	float noise;
-	float hue;
-};
+	RainEffect();
 
-#endif /* RAINEFFECT_H_ */
+	// FIELDS
+	int   mOffset;
+	float mNoise;
+	float mHue;
+};

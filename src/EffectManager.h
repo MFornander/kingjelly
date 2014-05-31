@@ -1,34 +1,37 @@
-/*
- * EffectManager.h
- *
- *  Created on: May 25, 2014
- *      Author: jellydev
- */
-
-#ifndef EFFECTMANAGER_H_
-#define EFFECTMANAGER_H_
-
-#include <vector>
-#include "InputEffect.h"
+#pragma once
+#include "KingJelly.h"
 
 // Forwards
-class IState;
-class Effect;
+class JellyEffect;
 
-/// TODO
+/**
+ * JellyEffect registrar, factory, and owner.
+ *
+ * Used by the main loop when switching between effects and
+ * is the creater and owner of the current JellyEffect instance.
+ * JellyEffects are created and destroyed to keep memory usage low
+ * in anticipation of many effects classes with potentially heavy
+ * field variables. */
 class EffectManager
 {
 public:
 	EffectManager();
-	virtual ~EffectManager();
+	~EffectManager();
 
-	void SetState(const IState& state);
-	Effect* GetEffect() const;
+	// Set the JellyEffect with the indicated index to active
+	void ActivateEffect(uint32_t index);
+
+	// Convenience method switching to next effect or wraps to zero
+	void NextEffect();
+
+	// Fetch the current JellyEffect instance
+	JellyEffect& GetActiveInstance() const;
 
 private:
-	std::vector <InputEffect *> m_effects;
-	bool                        m_switch;
-	int                         m_curr_effect_idx;
-};
+	typedef JellyEffect* (*MakeEffect)();
 
-#endif /* EFFECTMANAGER_H_ */
+	static const uint32_t kDefaultIndex = 0; // Startup effect index
+	uint32_t              mCurrentIndex;     // Index of current JellyEffect instance
+	JellyEffect*          mCurrentEffect;    // Current JellyEffect instance, never nullptr
+	vector<MakeEffect>    mEffectFactory;    // List of factory methods that creates JellyEffects
+};

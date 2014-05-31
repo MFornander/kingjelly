@@ -1,20 +1,24 @@
-#ifndef DEFAULTEFFECT_H_
-#define DEFAULTEFFECT_H_
+#pragma once
+#include "JellyEffect.h"
 
-#include "InputEffect.h"
-
-class DefaultEffect : public InputEffect
+/**
+ * Effect used when Jelly is turned on.
+ *
+ * Please use this as a template for new effects to maintain a
+ * consistent code style of our effect library.
+ * NOTE: You must also add a corresponding line in EffectManager's ctor */
+class DefaultEffect : public JellyEffect
 {
 public:
-	DefaultEffect();
+	static JellyEffect* Create();  // Required factory method for all effects
 
-	virtual void beginFrame(const FrameInfo& frame);
-	virtual void shader(Vec3& rgb, const PixelInfo& pixel) const;
-
-	void setState(const IState&){}
+	virtual void beginFrame(const FrameInfo& frame); // Called once per frame
+	virtual void shader(Vec3& rgb, const PixelInfo& pixel) const; // Called once per LED
 
 private:
-	float mCycle;
-};
+	DefaultEffect(); // Private ctor forcing factory-only contruction
 
-#endif /* DEFAULTEFFECT_H_ */
+	// FIELDS
+	float mCycle;
+	float mSaturation;
+};

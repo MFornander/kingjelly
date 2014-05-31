@@ -1,14 +1,30 @@
 #include "KingJelly.h"
-#include "NetworkState.h"
-#include "EffectManager.h"
 #include "lib/effect_runner.h"
+#include "NetworkController.h"
+#include "KeyboardController.h"
+#include "EffectManager.h"
+#include "JellyEffect.h"
 
+
+// Detect releasing button 0
+// TODO: Refactor to cleaner input->event system?
+bool ReleaseButton0(const IController& controller)
+{
+	static bool sLastState = false;
+	bool currentState = controller.Digital(0);
+
+	bool clickRelease = sLastState && !currentState;
+	sLastState = currentState;
+	return clickRelease;
+}
 
 int main(int argc, char** argv)
 {
-	NetworkState state;
+	// System components
+//	NetworkState state;
 	EffectManager manager;
 	EffectRunner runner;
+	KeyboardController controller;
 
     // Defaults, overridable with command line options
 	runner.setMaxFrameRate(300);
@@ -16,18 +32,22 @@ int main(int argc, char** argv)
 	if (!runner.parseArguments(argc, argv))
 		return 1;
 
-	Effect* currentEffect = nullptr;
-	while(true)
+	while (true)
 	{
-		state.Update();
-		manager.SetState(state);
-		Effect* newEffect = manager.GetEffect();
-		if (newEffect != currentEffect)
-		{
-			currentEffect = newEffect;
-			runner.setEffect(currentEffect);
-		}
+		// Switch to next effect?
+		if (ReleaseButton0(controller))
+			manager.NextEffect();
 
+		JellyEffect& activeEffect = manager.GetActiveInstance();
+
+		// Transfer analog control inputs to effect
+		controller.Update();
+		const uint32_t kInputCount = 4;
+		for (uint32_t inputIndex = 0; inputIndex < kInputCount; ++inputIndex)
+			activeEffect.SetInput(inputIndex, controller.Analog(inputIndex));
+
+		// Draw effect frame
+		runner.setEffect(&activeEffect);
 		runner.doFrame();
 	}
 

@@ -1,16 +1,22 @@
 #include "DefaultEffect.h"
-#include "InputEffect.h"
-#include "lib/color.h"
-#include "lib/effect_runner.h"
 #include "lib/noise.h"
+#include "lib/color.h"
+
+
+JellyEffect* DefaultEffect::Create()
+{
+	return new DefaultEffect();
+}
 
 DefaultEffect::DefaultEffect() :
-	mCycle (0)
+	mCycle(0),
+	mSaturation(0)
 {}
 
 void DefaultEffect::beginFrame(const FrameInfo& frame)
 {
-	const float speed = 1.0;
+	const float speed = Input(0);
+	mSaturation = Input(1);
 	mCycle = fmodf(mCycle + frame.timeDelta * speed, 2 * M_PI);
 }
 
@@ -21,6 +27,6 @@ void DefaultEffect::shader(Vec3& rgb, const PixelInfo& pixel) const
 	float wave1 = sinf(0.5 * distance - mCycle) + perlin3;
 	float wave2 = sinf(3.0 * distance - mCycle) - perlin3;
 	float wave3 = sinf(mCycle);
-	hsv2rgb(rgb, wave1, wave3, wave2);
-}
 
+	hsv2rgb(rgb, wave1, mSaturation * wave3, wave2);
+}

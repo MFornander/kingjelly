@@ -2,33 +2,42 @@
 #include "DefaultEffect.h"
 #include "RainEffect.h"
 
-#include <vector>
 
-EffectManager::EffectManager():
-	m_switch(false),
-	m_curr_effect_idx(0)
+EffectManager::EffectManager() :
+	mCurrentIndex(kDefaultIndex),
+	mCurrentEffect(nullptr)
 {
-	m_effects.push_back(new RainEffect); 
-	m_effects.push_back(new DefaultEffect); 
+	// Add each effect's create method to our factory
+	mEffectFactory.push_back(DefaultEffect::Create);
+	mEffectFactory.push_back(RainEffect::Create);
+
+	// Instantiate the default effect
+	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();
 }
 
 EffectManager::~EffectManager()
 {
-
+	delete mCurrentEffect;
+	mCurrentEffect = nullptr;
 }
 
-void EffectManager::SetState(const IState& state)
+void EffectManager::ActivateEffect(uint32_t index)
 {
-	if(state.Switch() != m_switch)
-	{
-		m_curr_effect_idx = (m_curr_effect_idx+1)%m_effects.size();
-		m_switch = state.Switch();
-	}
+	if (index == mCurrentIndex)
+		return;
 
-	m_effects[0]->setState(state);
+	delete mCurrentEffect;
+	mCurrentIndex = index % mEffectFactory.size();
+	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();
 }
 
-Effect* EffectManager::GetEffect() const
+void EffectManager::NextEffect()
 {
-	return(static_cast<Effect *>(m_effects[m_curr_effect_idx]));
+	ActivateEffect(mCurrentIndex + 1);
+	cout << "NEXT! " << mCurrentIndex << endl;
+}
+
+JellyEffect& EffectManager::GetActiveInstance() const
+{
+	return *mCurrentEffect;
 }
