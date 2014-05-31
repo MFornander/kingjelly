@@ -1,7 +1,7 @@
 #include "KingJelly.h"
 #include "RainEffect.h"
 
-
+#define ABS(x) ((x<0)?-x:x)
 JellyEffect* RainEffect::Create()
 {
 	return new RainEffect();
@@ -28,7 +28,7 @@ void RainEffect::shader(Vec3& rgb, const PixelInfo& pixel) const
 	int pos = pixel.index % static_cast<int>(JellyPixel::kLedCount * mNoise);
 
 	// distance from the center pixel of the wave
-    int distance = abs(min((pos - mOffset/10) % JellyPixel::kLedCount,
+    int distance = ABS(min((pos - mOffset/10) % JellyPixel::kLedCount,
 	        	                 (mOffset/10 - pos) % JellyPixel::kLedCount));
 
     // get dimmer based on distance from center

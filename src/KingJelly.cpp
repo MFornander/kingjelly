@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 //	NetworkState state;
 	EffectManager manager;
 	EffectRunner runner;
-	KeyboardController controller;
+	NetworkController controller;
 
     // Defaults, overridable with command line options
 	runner.setMaxFrameRate(300);
