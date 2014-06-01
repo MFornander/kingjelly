@@ -1,0 +1,99 @@
+<!doctype html>
+<head>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="static/css/jquery.mobile-1.4.0.min.css" />
+<script src="static/js/jquery-1.9.1.min.js"></script>
+<script src="static/js/jquery.mobile-1.4.0.min.js"></script>
+</head>
+
+<style>
+h3, h4 {text-align: center;}
+span {font-weight: bold;}
+</style>
+
+<script type=text/javascript>
+    $(
+    // When the switch is switched
+    // do an ajax request to server to change state
+    function() 
+    {
+        $('#flip-1').change(function() 
+        {
+        $.getJSON('/_switch', {state: $('#flip-1').val()});
+        });  
+
+        $('#slider-0').change(function() 
+        {
+        $.getJSON('/_pot0', {state: $('#slider-0').val()});
+        });    
+        $('#slider-1').change(function() 
+        {
+        $.getJSON('/_pot1', {state: $('#slider-1').val()});
+        });   
+        $('#slider-2').change(function() 
+        {
+        $.getJSON('/_pot2', {state: $('#slider-2').val()});
+        });   
+        $('#slider-3').change(function() 
+        {
+        $.getJSON('/_pot3', {state: $('#slider-3').val()});
+        });  
+    }
+    );
+
+    /*function() 
+    {
+        $('#slider-0').change(function() 
+        {
+        $.getJSON('/_pot0', {state: $('#slider-0').val()});
+        });     
+    }
+    );*/
+    /*$(
+    // periodically (500ms) do an ajax request to get the button state
+    // modify the span tag to reflect the state (pressed or not)
+    // the state text comes from the JSON string returned by the server
+    function button() 
+    {
+        $.getJSON('/_button', function(data)
+            {
+                $("#buttonState").text(data.buttonState);
+                setTimeout(function(){button();},500);
+            });
+    }
+    );*/
+    
+
+</script>
+<!-- Simple JQuery Mobile page that display the button state on the breadoard -->
+<!-- You can also change the LED state with the slider switch -->
+<!-- The Raspberry Pi uptime is displayed in the footer (Jinja2 expands the template tag) -->
+
+<div data-role="page" data-theme="b">
+  <div data-role="header">
+    <div><h3>KingJelly Remote Control</h3></div>
+  </div>
+
+  <div data-role="content">
+    <form>
+
+    <label for="slider-0">Pot 0:</label>
+    <input type="range" name="slider-0" id="slider-0" value="128" min="0" max="255" data-highlight="true" />
+    <label for="slider-1">Pot 1:</label>
+    <input type="range" name="slider-1" id="slider-1" value="128" min="0" max="255" data-highlight="true" />
+    <label for="slider-2">Pot 2:</label>
+    <input type="range" name="slider-2" id="slider-2" value="128" min="0" max="255" data-highlight="true" />
+    <label for="slider-3">Pot 3:</label>
+    <input type="range" name="slider-3" id="slider-3" value="128" min="0" max="255" data-highlight="true" />
+
+
+    <select name="flip-1" id="flip-1" data-role="slider" style="float: left;">
+        <option value="0">OFF</option>
+        <option value="1">ON</option>
+    </select>
+    </form>
+  </div>
+ <div data-role="footer">
+    <div><h4>KingJelly has been {{uptime}}</h4></div>
+  </div>
+</div>

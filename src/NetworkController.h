@@ -12,11 +12,15 @@ public:
 	bool Switch() const;
 //	void Switch(bool val) const;
 
-	float Pot(unsigned int idx) const;
+	virtual bool Digital(uint32_t index) const;
+	virtual float Analog(uint32_t index) const;
+
 //	void Pot(unsigned int idx, const float val);
 
 private:
-    std::vector<float> m_pots;
+
 	bool               m_switch;
 	int                m_sock;
+
+	vector<float> m_analog; // Current state of analog channels
 };

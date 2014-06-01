@@ -2,7 +2,6 @@
 #include "lib/effect_runner.h"
 #include "NetworkController.h"
 #include "KeyboardController.h"
-#include "GpioController.h"
 #include "EffectManager.h"
 #include "JellyEffect.h"
 

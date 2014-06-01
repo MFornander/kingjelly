@@ -9,7 +9,7 @@
 class JellyEffect: public Effect
 {
 public:
-	const uint32_t kInputCount = 4;
+	static const uint32_t kInputCount = 4;
 
 	// Input setter used by main loop to transfer controller data
 	// TODO: refactor with less hardcoded counts
