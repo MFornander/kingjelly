@@ -2,6 +2,7 @@
 #include "lib/effect_runner.h"
 #include "NetworkController.h"
 #include "KeyboardController.h"
+#include "GpioController.h"
 #include "EffectManager.h"
 #include "JellyEffect.h"
 
@@ -23,7 +24,6 @@ int main(int argc, char** argv)
 	// System components
 	EffectManager manager;
 	EffectRunner runner;
-//	KeyboardController controller;
 	GpioController controller;
 
     // Defaults, overridable with command line options
