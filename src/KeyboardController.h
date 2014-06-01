@@ -14,7 +14,6 @@ class KeyboardController : public IController
 {
 public:
 	KeyboardController();
-	virtual ~KeyboardController();
 
 	// Refresh all channels by processing stdin lines since last Update call
 	virtual void Update();

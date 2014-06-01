@@ -2,6 +2,7 @@
 #include "lib/effect_runner.h"
 #include "NetworkController.h"
 #include "KeyboardController.h"
+#include "GpioController.h"
 #include "EffectManager.h"
 #include "JellyEffect.h"
 
@@ -21,10 +22,10 @@ bool ReleaseButton0(const IController& controller)
 int main(int argc, char** argv)
 {
 	// System components
-//	NetworkState state;
 	EffectManager manager;
 	EffectRunner runner;
-	KeyboardController controller;
+//	KeyboardController controller;
+	GpioController controller;
 
     // Defaults, overridable with command line options
 	runner.setMaxFrameRate(300);
