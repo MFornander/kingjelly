@@ -6,6 +6,7 @@
 CPP_SRCS += \
 ../src/DefaultEffect.cpp \
 ../src/EffectManager.cpp \
+../src/GpioController.cpp \
 ../src/JellyEffect.cpp \
 ../src/KeyboardController.cpp \
 ../src/KingJelly.cpp \
@@ -15,6 +16,7 @@ CPP_SRCS += \
 OBJS += \
 ./src/DefaultEffect.o \
 ./src/EffectManager.o \
+./src/GpioController.o \
 ./src/JellyEffect.o \
 ./src/KeyboardController.o \
 ./src/KingJelly.o \
@@ -24,6 +26,7 @@ OBJS += \
 CPP_DEPS += \
 ./src/DefaultEffect.d \
 ./src/EffectManager.d \
+./src/GpioController.d \
 ./src/JellyEffect.d \
 ./src/KeyboardController.d \
 ./src/KingJelly.d \

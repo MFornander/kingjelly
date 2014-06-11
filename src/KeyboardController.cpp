@@ -23,9 +23,6 @@ KeyboardController::KeyboardController() :
 	mAnalog(kControlCount)
 {}
 
-KeyboardController::~KeyboardController()
-{}
-
 void KeyboardController::Update()
 {
 	// Get any lines typed without waiting
