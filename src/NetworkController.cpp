@@ -12,7 +12,7 @@
 NetworkController::NetworkController() :
 	m_switch(false),
 	m_sock(-1),
-	m_analog(4, 1.0f)
+	m_analog(4, 0.5f)
 {
 	struct sockaddr_in server;// = {AF_INET, INADDR_ANY,30000};
 
@@ -68,7 +68,7 @@ void NetworkController::Update()
 		m_analog[0] = data.pot0 / 255.0;
 		m_analog[1] = data.pot1 / 255.0;
 		m_analog[2] = data.pot2 / 255.0;
-		m_analog[2] = data.pot3 / 255.0;
+		m_analog[3] = data.pot3 / 255.0;
 	}
 }
 
