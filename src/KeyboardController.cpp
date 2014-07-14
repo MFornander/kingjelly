@@ -18,11 +18,10 @@ bool IsInputAvailable()
 	return FD_ISSET(0, &fds);
 }
 
-KeyboardController::KeyboardController() :
-	mDigital(kControlCount),
-	mAnalog(kControlCount)
+KeyboardController::KeyboardController()
 {}
 
+/// Refresh all channels by processing stdin lines since last Update call
 void KeyboardController::Update()
 {
 	// Get any lines typed without waiting
@@ -37,20 +36,6 @@ void KeyboardController::Update()
 	}
 }
 
-bool KeyboardController::Digital(uint32_t index) const
-{
-	if (index < mDigital.size())
-		return mDigital.at(index);
-	return false;
-}
-
-float KeyboardController::Analog(uint32_t index) const
-{
-	if (index < mAnalog.size())
-		return mAnalog.at(index);
-	return 0;
-}
-
 void KeyboardController::ExecuteCommand(const string& command)
 {
 	char channel;
@@ -59,8 +44,11 @@ void KeyboardController::ExecuteCommand(const string& command)
 		return;
 
 	if (channel >= 'a' && channel <= 'z')
-		mAnalog.at(channel - 'a') = max(0.0f, min(100.0f, static_cast<float>(value) / 100.0f));
+		mAnalog.at(channel - 'a') = max(0.0f, min(1.0f, static_cast<float>(value) / 100.0f));
 
 	if (channel >= 'A' && channel <= 'Z')
 		mDigital.at(channel - 'A') = (value != 0);
+
+	if (channel == ':')
+		mEnabled = value != 0;
 }

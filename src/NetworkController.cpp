@@ -10,9 +10,7 @@
 
 
 NetworkController::NetworkController() :
-	m_switch(false),
-	m_sock(-1),
-	m_analog(4, 1.0f)
+	m_sock(-1)
 {
 	struct sockaddr_in server;// = {AF_INET, INADDR_ANY,30000};
 
@@ -64,21 +62,10 @@ void NetworkController::Update()
 		memcpy(&data, buf, n);
 		printf("%d %d %d %d %d\n", data.s, data.pot0, data.pot1, data.pot2, data.pot3);
 
-		m_switch = data.s;
-		m_analog[0] = data.pot0 / 255.0;
-		m_analog[1] = data.pot1 / 255.0;
-		m_analog[2] = data.pot2 / 255.0;
-		m_analog[2] = data.pot3 / 255.0;
+		mDigital[0] = data.s;
+		mAnalog[0] = data.pot0 / 255.0;
+		mAnalog[1] = data.pot1 / 255.0;
+		mAnalog[2] = data.pot2 / 255.0;
+		mAnalog[2] = data.pot3 / 255.0;
 	}
-}
-
-
-bool NetworkController::Digital(uint32_t index) const
-{
-	return(m_switch);
-}
-
-float NetworkController::Analog(uint32_t index) const
-{
-	return(m_analog.at(index));
 }

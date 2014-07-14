@@ -22,7 +22,7 @@ public:
 	void ActivateEffect(uint32_t index);
 
 	// Convenience method switching to next effect or wraps to zero
-	void NextEffect();
+	void NextEffect(bool backwards);
 
 	// Fetch the current JellyEffect instance
 	JellyEffect& GetActiveInstance() const;

@@ -31,10 +31,10 @@ void EffectManager::ActivateEffect(uint32_t index)
 	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();
 }
 
-void EffectManager::NextEffect()
+void EffectManager::NextEffect(bool backwards)
 {
-	ActivateEffect(mCurrentIndex + 1);
-	cout << "NEXT! " << mCurrentIndex << endl;
+	uint32_t offset = backwards ? mEffectFactory.size() - 1 : 1;
+	ActivateEffect(mCurrentIndex + offset);
 }
 
 JellyEffect& EffectManager::GetActiveInstance() const

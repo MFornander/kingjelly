@@ -2,20 +2,22 @@
 #include "lib/effect_runner.h"
 #include "NetworkController.h"
 #include "KeyboardController.h"
-#include "GpioController.h"
+#include "AdcController.h"
 #include "EffectManager.h"
 #include "JellyEffect.h"
 
 
 // Detect releasing button 0
 // TODO: Refactor to cleaner input->event system?
-bool ReleaseButton0(const IController& controller)
+bool ReleaseButton(const BaseController& controller, uint32_t buttonIndex)
 {
-	static bool sLastState = false;
-	bool currentState = controller.Digital(0);
+	static bool sLastState[4] = {false,false,false,false};
+	buttonIndex = min<uint32_t>(buttonIndex, 3);
 
-	bool clickRelease = sLastState && !currentState;
-	sLastState = currentState;
+	bool currentState = controller.Digital(buttonIndex);
+	bool clickRelease = sLastState[buttonIndex] && !currentState;
+
+	sLastState[buttonIndex] = currentState;
 	return clickRelease;
 }
 
@@ -24,7 +26,10 @@ int main(int argc, char** argv)
 	// System components
 	EffectManager manager;
 	EffectRunner runner;
-	GpioController controller;
+
+	AdcController adcController;
+	KeyboardController keyController;
+	NetworkController netController;
 
     // Defaults, overridable with command line options
 	runner.setMaxFrameRate(300);
@@ -34,9 +39,15 @@ int main(int argc, char** argv)
 
 	while (true)
 	{
-		// Switch to next effect?
-		if (ReleaseButton0(controller))
-			manager.NextEffect();
+		// TODO: Select controller based on 'enabled' reading
+		BaseController& controller = keyController;
+		controller.Update();
+
+		// Switch to next or previous effect?
+		if (ReleaseButton(controller, 0))
+			manager.NextEffect(false);
+		if (ReleaseButton(controller, 1))
+			manager.NextEffect(true);
 
 		JellyEffect& activeEffect = manager.GetActiveInstance();
 

@@ -4,9 +4,11 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/AdcController.cpp \
+../src/BaseController.cpp \
+../src/BlackLib.cpp \
 ../src/DefaultEffect.cpp \
 ../src/EffectManager.cpp \
-../src/GpioController.cpp \
 ../src/JellyEffect.cpp \
 ../src/KeyboardController.cpp \
 ../src/KingJelly.cpp \
@@ -14,9 +16,11 @@ CPP_SRCS += \
 ../src/RainEffect.cpp 
 
 OBJS += \
+./src/AdcController.o \
+./src/BaseController.o \
+./src/BlackLib.o \
 ./src/DefaultEffect.o \
 ./src/EffectManager.o \
-./src/GpioController.o \
 ./src/JellyEffect.o \
 ./src/KeyboardController.o \
 ./src/KingJelly.o \
@@ -24,9 +28,11 @@ OBJS += \
 ./src/RainEffect.o 
 
 CPP_DEPS += \
+./src/AdcController.d \
+./src/BaseController.d \
+./src/BlackLib.d \
 ./src/DefaultEffect.d \
 ./src/EffectManager.d \
-./src/GpioController.d \
 ./src/JellyEffect.d \
 ./src/KeyboardController.d \
 ./src/KingJelly.d \
