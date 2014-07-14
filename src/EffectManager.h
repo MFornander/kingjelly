@@ -30,7 +30,7 @@ public:
 private:
 	typedef JellyEffect* (*MakeEffect)();
 
-	static const uint32_t kDefaultIndex = 0; // Startup effect index
+	static const uint32_t kDefaultIndex = 1; // Startup effect index
 	uint32_t              mCurrentIndex;     // Index of current JellyEffect instance
 	JellyEffect*          mCurrentEffect;    // Current JellyEffect instance, never nullptr
 	vector<MakeEffect>    mEffectFactory;    // List of factory methods that creates JellyEffects

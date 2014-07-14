@@ -66,6 +66,6 @@ void NetworkController::Update()
 		mAnalog[0] = data.pot0 / 255.0;
 		mAnalog[1] = data.pot1 / 255.0;
 		mAnalog[2] = data.pot2 / 255.0;
-		mAnalog[2] = data.pot3 / 255.0;
+		mAnalog[3] = data.pot3 / 255.0;
 	}
 }
