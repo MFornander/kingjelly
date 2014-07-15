@@ -50,9 +50,6 @@ void AdcController::Update()
 
 float AdcController::DeJitter(float current, float input)
 {
-
-//	printf("%f %f %f %f\n", current, input, fabs(current-input), mHysteresis);
-
 	if(fabs(current-input) > mHysteresis)
 	{
 		return(input);
