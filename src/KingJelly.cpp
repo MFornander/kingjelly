@@ -29,6 +29,7 @@ BaseController& GetController()
 	if (adcController.IsEnabled())
 		return adcController;
 
+
 	static KeyboardController keyController;
 	keyController.Update();
 	if (keyController.IsEnabled())
@@ -36,7 +37,7 @@ BaseController& GetController()
 
 	static NetworkController netController;
 	netController.Update();
-	if (adcController.IsEnabled())
+	if (!adcController.IsEnabled())
 		return netController;
 
 	static AutoController autoController;
