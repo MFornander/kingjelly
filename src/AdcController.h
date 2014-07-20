@@ -16,11 +16,12 @@ private:
 	BlackADC mAIN2;
 	BlackADC mAIN3;
 	BlackADC mAIN4;
-//	BlackADC mAIN5;
+//	BlackADC mAIN5;  // AIN5 is not connected on the King Jelly 2014 cape
 	BlackADC mAIN6;
 
-	float DeJitter(float current, float input);
+	static float DeJitter(float current, float input);
 
-	// number of bins to quantize input over
-	constexpr static float mHysteresis = 1.0f/32;
+	// Bin count to quantize input over
+	constexpr static float kBinCount = 32.0f;
+	constexpr static float kHysteresis = 1.0f / kBinCount;
 };
