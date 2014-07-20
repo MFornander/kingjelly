@@ -36,7 +36,7 @@ BaseController& GetController()
 
 	static NetworkController netController;
 	netController.Update();
-	if (adcController.IsEnabled())
+	if (netController.IsEnabled())
 		return netController;
 
 	static AutoController autoController;

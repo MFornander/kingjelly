@@ -57,6 +57,9 @@ void NetworkController::Update()
 	n = recv(m_sock, buf, 128, MSG_DONTWAIT);
 	if (n > 0)
 	{
+                // any traffic enables the network controller
+                mEnabled = true;
+
 		// need to fix the case where we have more than one packet pending
 		printf("Received %d bytes\n", n);
 		memcpy(&data, buf, n);
