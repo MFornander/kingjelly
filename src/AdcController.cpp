@@ -53,16 +53,9 @@ void AdcController::Update()
 
 float AdcController::DeJitter(float current, float input)
 {
-<<<<<<< HEAD
 //	printf("%f %f %f %f\n", current, input, fabs(current-input), mHysteresis);
 	if (std::abs(current - input) > kHysteresis)
 		return input;
-=======
-	if(fabs(current-input) > mHysteresis)
-	{
-		return(input);
-	}
->>>>>>> branch 'master' of https://github.com/MFornander/kingjelly.git
 	else
 		return current;
 }
