@@ -19,13 +19,13 @@ float ClampInput(BlackADC& adc)
 }
 
 AdcController::AdcController() :
-	mAIN0(AIN0),
-	mAIN1(AIN1),
-	mAIN2(AIN2),
-	mAIN3(AIN3),
-	mAIN4(AIN4),
-//	mAIN5(AIN5),
-	mAIN6(AIN6)
+	mAIN0(AIN0, 11, 20), // 11 slots, 20 readings to change
+	mAIN1(AIN1, 2, 1),   // 2 slots, 1 reading to change
+	mAIN2(AIN2, 11, 20),
+	mAIN3(AIN3, 2, 1),
+	mAIN4(AIN4, 11, 20),
+	mAIN5(AIN5, 2, 1),
+	mAIN6(AIN6, 11, 20)
 {}
 
 void AdcController::Update()
@@ -33,15 +33,17 @@ void AdcController::Update()
 	// The following map of AIN to analog reflects the King Jelly 2014
 	// controller where analog0 is the leftmost potentiomenter and analog3 is
 	// the rightmost.
-	mAnalog[0] = DeJitter(mAnalog[0], ClampInput(mAIN4));
-	mAnalog[1] = DeJitter(mAnalog[1], ClampInput(mAIN6));
-	mAnalog[2] = DeJitter(mAnalog[2], ClampInput(mAIN2));
-	mAnalog[3] = DeJitter(mAnalog[3], ClampInput(mAIN0));
+	mAnalog[0] = mAIN4.GetValue();
+	mAnalog[1] = mAIN6.GetValue();
+	mAnalog[2] = mAIN2.GetValue();
+	mAnalog[3] = mAIN0.GetValue();
 
-	// Mapping digital0 to joystick left and digital1 to joystick right.
+	// Mapping digital-0 to joystick left and digital-1 to joystick right.
 	// joystick up and down are unmapped this year.
-	mDigital[0] = ClampInput(mAIN1) > 0.5f;
-	mDigital[1] = ClampInput(mAIN3) > 0.5f;
+	// TODO: We will connect digital-2 to the main switch.
+	mDigital[0] = mAIN1.GetValue() > 0.5f;
+	mDigital[1] = mAIN3.GetValue() > 0.5f;
+	mDigital[2] = mAIN5.GetValue() > 0.5f;
 
 	// Enabled equals power off such that all analog inputs are off which maps to
 	// four 1.0 values.  Note that this can be achieved by turning all potentiometers
@@ -49,14 +51,5 @@ void AdcController::Update()
 	// it will turn off the controller if you turn down the brightness to zero and turn
 	// the other three controls to the far right.
 	mEnabled = (mAnalog[0] + mAnalog[1] + mAnalog[2] + mAnalog[3]) < 4.0f;
-}
-
-float AdcController::DeJitter(float current, float input)
-{
-//	printf("%f %f %f %f\n", current, input, fabs(current-input), mHysteresis);
-	if (std::abs(current - input) > kHysteresis)
-		return input;
-	else
-		return current;
 }
 

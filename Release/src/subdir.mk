@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/AdcController.cpp \
+../src/AdcReader.cpp \
 ../src/AutoController.cpp \
 ../src/BaseController.cpp \
 ../src/BlackLib.cpp \
@@ -18,6 +19,7 @@ CPP_SRCS += \
 
 OBJS += \
 ./src/AdcController.o \
+./src/AdcReader.o \
 ./src/AutoController.o \
 ./src/BaseController.o \
 ./src/BlackLib.o \
@@ -31,6 +33,7 @@ OBJS += \
 
 CPP_DEPS += \
 ./src/AdcController.d \
+./src/AdcReader.d \
 ./src/AutoController.d \
 ./src/BaseController.d \
 ./src/BlackLib.d \
