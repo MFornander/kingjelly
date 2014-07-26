@@ -18,6 +18,15 @@ float JellyEffect::Input(uint32_t index) const
 	return 0;
 }
 
+void JellyEffect::debug(const DebugInfo& info)
+{
+	fprintf(stderr, "Controls: [%3u,%3u,%3u,%3u] --",
+		static_cast<uint32_t>(100 * mCurrentInputs.at(0)),
+		static_cast<uint32_t>(100 * mCurrentInputs.at(1)),
+		static_cast<uint32_t>(100 * mCurrentInputs.at(2)),
+		static_cast<uint32_t>(100 * mCurrentInputs.at(3)));
+}
+
 
 JellyPixel::JellyPixel(const Effect::PixelInfo& pixelInfo) :
 	mJellyInfo(ldiv(pixelInfo.index, kStrandCount))

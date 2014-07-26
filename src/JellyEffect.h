@@ -15,8 +15,11 @@ public:
 	// TODO: refactor with less hardcoded counts
 	void  SetInput(uint32_t index, float value);
 
-	// Input getter used by the effect's
+	// Input getter used by the effects
 	float Input(uint32_t index) const;
+
+	// Print out all inputs every second in verbose mode
+	virtual void debug(const DebugInfo& info);
 
 protected:
 	JellyEffect();

@@ -26,7 +26,7 @@ BaseController& GetController()
 {
 	static AdcController adcController;
 	adcController.Update();
-	if (adcController.IsEnabled())
+//	if (adcController.IsEnabled())
 		return adcController;
 
 	static KeyboardController keyController;
@@ -49,17 +49,18 @@ int main(int argc, char** argv)
 	// System components
 	EffectManager manager;
 	EffectRunner runner;
+	AdcController adcController;
 
-    // Defaults, overridable with command line options
+	// Defaults, overridable with command line options
 	runner.setMaxFrameRate(300);
-	runner.setLayout("scripts/jelly16x100.json");
+	runner.setLayout("/opt/git/kingjelly/scripts/jelly16x100.json");
 	if (!runner.parseArguments(argc, argv))
 		return 1;
 
 	while (true)
 	{
 		// Select controller based on 'enabled' reading
-		BaseController& controller = GetController();
+		BaseController& controller = adcController;//GetController();
 
 		// Switch to next or previous effect?
 		if (ReleaseButton(controller, 0))

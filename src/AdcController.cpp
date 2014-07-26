@@ -1,31 +1,14 @@
 #include "AdcController.h"
 #include <cmath>
 
-float ClampInput(BlackADC& adc)
-{
-	// Jelly controller potentiometers are hooked up such that
-	// ~1790 is leftmost and ~15 is rightmost
-	float value = adc.getNumericValue();
-
-	// Clamp values at edges
-	if (value > 1750.0f)
-		value = 1800.0f;
-	if (value < 50.0f)
-		value = 0;
-
-	// Return an inverted value from 0.0 to 1.0 such that
-	// leftmost (ccw) is 0, and rightmost (cw) is 1.
-	return 1.0f - (value / 1800.0f);
-}
-
 AdcController::AdcController() :
-	mAIN0(AIN0, 11, 20), // 11 slots, 20 readings to change
-	mAIN1(AIN1, 2, 1),   // 2 slots, 1 reading to change
-	mAIN2(AIN2, 11, 20),
+	mAIN0(AIN0, 10, 5),  // 10 slots, 5 stable readings to change
+	mAIN1(AIN1, 2, 1),   // 2 slots, 1 stable reading to change
+	mAIN2(AIN2, 10, 5),
 	mAIN3(AIN3, 2, 1),
-	mAIN4(AIN4, 11, 20),
+	mAIN4(AIN4, 10, 5),
 	mAIN5(AIN5, 2, 1),
-	mAIN6(AIN6, 11, 20)
+	mAIN6(AIN6, 10, 5)
 {}
 
 void AdcController::Update()

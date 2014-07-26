@@ -15,7 +15,7 @@ DefaultEffect::DefaultEffect() :
 
 void DefaultEffect::beginFrame(const FrameInfo& frame)
 {
-	const float speed = Input(0);
+	const float speed = Input(0) * 4.0f;
 	mSaturation = Input(1);
 	mCycle = fmodf(mCycle + frame.timeDelta * speed, 2 * M_PI);
 }

@@ -34,5 +34,5 @@ float AdcReader::GetValue()
 		mNewCount = 0;
 	}
 
-	return static_cast<float>(mCurrentSlot) / mSlotCount;
+	return 1.0f - static_cast<float>(mCurrentSlot) / mSlotCount;
 }
