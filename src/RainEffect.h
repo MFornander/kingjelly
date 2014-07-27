@@ -19,5 +19,5 @@ private:
 	float    mHue;
 	uint32_t mSpeed;
 	uint32_t mMod;
-	uint32_t mLen;
+	int32_t  mLen;
 };

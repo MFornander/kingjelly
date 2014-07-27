@@ -54,7 +54,7 @@ void RainEffect::shader(Vec3& rgb, const PixelInfo& pixel) const
 	        	           mod(off - pos, JellyPixel::kLedCount)));
 
     // get dimmer based on distance from center
-	float wave = max(0.0, (mLen-distance)/	(double)mLen);
+	float wave = max(0.0, (mLen-distance)/(double)mLen);
 
 	/*
 	if(pixel.index > 80 && pixel.index < 100)
@@ -65,4 +65,7 @@ void RainEffect::shader(Vec3& rgb, const PixelInfo& pixel) const
     */
 
 	hsv2rgb(rgb, mHue, 1.0f, wave);
+
+	//printf("%d : (%f %f %f) : %f %f %f\n", pixel.index, rgb[0], rgb[1], rgb[2],mHue,1.0,wave);
+
 }
