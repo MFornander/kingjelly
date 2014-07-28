@@ -18,7 +18,8 @@ start)
         echo "Starting LEDscape..."
         modprobe uio_pruss
         cd /opt/git/LEDscape
-        nohup ./opc-server -c 100 -i -t > $LOGFILE &
+	# 100 leds, no interpolation or dithering, disable 2nd PRU
+        nohup ./opc-server -c 100 -i -t -1 NOP > $LOGFILE &
         echo $! > $PIDFILE
 ;;
 stop)

@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 SerialController::SerialController(const string& serialDevicePath) :
-	mFileDescriptor(open(serialDevicePath.c_str(), O_RDWR | O_NOCTTY | O_NDELAY))
+	mFileDescriptor(open(serialDevicePath.c_str(), O_RDONLY | O_NOCTTY | O_NDELAY))
 {
 	 if (mFileDescriptor < 0)
 		 fprintf(stderr, "SerialController init error: %d\n", mFileDescriptor);
@@ -14,15 +14,11 @@ void SerialController::Update()
 {
 	 if (mFileDescriptor < 0)
 		 return;
-	char command[10];
-	ssize_t readCount = read(mFileDescriptor, &command, sizeof(command));
 
-	if (readCount < 0)
-	{
-		fprintf(stderr, "SerialController read error: %ld\n", readCount);
-		mEnabled = false;
-	}
-	else if (readCount == 0)
+	char command[256] = {0};
+	ssize_t readCount = read(mFileDescriptor, command, 255);
+
+	if (readCount <= 0)
 	{
 		// TODO: Disable if no data was received in 5 seconds
 	}
