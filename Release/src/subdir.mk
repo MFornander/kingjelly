@@ -4,46 +4,40 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/AdcController.cpp \
-../src/AdcReader.cpp \
 ../src/AutoController.cpp \
 ../src/BaseController.cpp \
-../src/BlackLib.cpp \
 ../src/DefaultEffect.cpp \
 ../src/EffectManager.cpp \
 ../src/JellyEffect.cpp \
 ../src/KeyboardController.cpp \
 ../src/KingJelly.cpp \
 ../src/NetworkController.cpp \
-../src/RainEffect.cpp 
+../src/RainEffect.cpp \
+../src/SerialController.cpp 
 
 OBJS += \
-./src/AdcController.o \
-./src/AdcReader.o \
 ./src/AutoController.o \
 ./src/BaseController.o \
-./src/BlackLib.o \
 ./src/DefaultEffect.o \
 ./src/EffectManager.o \
 ./src/JellyEffect.o \
 ./src/KeyboardController.o \
 ./src/KingJelly.o \
 ./src/NetworkController.o \
-./src/RainEffect.o 
+./src/RainEffect.o \
+./src/SerialController.o 
 
 CPP_DEPS += \
-./src/AdcController.d \
-./src/AdcReader.d \
 ./src/AutoController.d \
 ./src/BaseController.d \
-./src/BlackLib.d \
 ./src/DefaultEffect.d \
 ./src/EffectManager.d \
 ./src/JellyEffect.d \
 ./src/KeyboardController.d \
 ./src/KingJelly.d \
 ./src/NetworkController.d \
-./src/RainEffect.d 
+./src/RainEffect.d \
+./src/SerialController.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

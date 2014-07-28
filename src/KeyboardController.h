@@ -15,8 +15,4 @@ class KeyboardController : public BaseController
 public:
 	KeyboardController();
 	virtual void Update();
-
-private:
-	/// Execute a single set-input command such as "B42"
-	void ExecuteCommand(const string& command);
 };

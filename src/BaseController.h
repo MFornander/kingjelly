@@ -22,6 +22,9 @@ public:
 	virtual float Analog(uint32_t index) const;
 
 protected:
+	/// Execute a single set-input command such as "b42"
+	void ExecuteCommand(const string& command);
+
 	static const uint32_t kControlCount = 'z'-'a' + 1; // One channel per character
 	vector<bool> mDigital; // Current state of digital channels
 	vector<float> mAnalog; // Current state of analog channels
