@@ -63,7 +63,7 @@ void NetworkController::Update()
 		// need to fix the case where we have more than one packet pending
 		printf("Received %d bytes\n", n);
 		memcpy(&data, buf, n);
-		printf("%d %d %d %d %d\n", data.s, data.pot0, data.pot1, data.pot2, data.pot3);
+		//printf("%d %d %d %d %d\n", data.s, data.pot0, data.pot1, data.pot2, data.pot3);
 
 		mDigital[0] = data.s;
 		mAnalog[0] = data.pot0 / 255.0;

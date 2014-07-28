@@ -13,7 +13,7 @@ def sendPacket():
     msg = pack('!?BBBB', *value) 
     s.sendto(msg,(HOST, PORT))
     s.close
-    print value
+    #print value
 
 
 # return index page when IP address of RPi is typed in the browser
