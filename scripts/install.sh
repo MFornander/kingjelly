@@ -36,5 +36,8 @@ update-rc.d apache2 disable
 cp flask-service /etc/init.d/
 update-rc.d flask-service defaults
 
-echo "Reboot to enable PRUs and awaken the KingJelly"
+## TODO: Enable UART5 automatically
+echo "Please edit /boot/uEnv.txt such that cmdline reads:\ncmdline=quiet init=/lib/systemd/systemd capemgr.enable_partno=BB-UART5"
 
+
+echo "Reboot to enable PRUs and awaken the KingJelly"
