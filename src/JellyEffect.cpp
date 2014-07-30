@@ -27,7 +27,3 @@ void JellyEffect::debug(const DebugInfo& info)
 		static_cast<uint32_t>(100 * mCurrentInputs.at(3)),
 		static_cast<uint32_t>(100 * mCurrentInputs.at(4)));
 }
-
-JellyPixel::JellyPixel(const Effect::PixelInfo& pixelInfo) :
-	mJellyInfo(ldiv(pixelInfo.index, kStrandCount))
-{}
