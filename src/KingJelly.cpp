@@ -1,15 +1,14 @@
 #include "KingJelly.h"
 #include "lib/effect_runner.h"
 #include "NetworkController.h"
-#include "KeyboardController.h"
+//#include "KeyboardController.h"
 #include "SerialController.h"
 #include "AutoController.h"
 #include "EffectManager.h"
 #include "JellyEffect.h"
 
 
-// Detect releasing button 0
-// TODO: Refactor to cleaner input->event system?
+// Detect releasing button
 bool ReleaseButton(const BaseController& controller, uint32_t buttonIndex)
 {
 	static bool sLastState[4] = {false,false,false,false};
@@ -24,10 +23,11 @@ bool ReleaseButton(const BaseController& controller, uint32_t buttonIndex)
 
 BaseController& GetController()
 {
-	static KeyboardController keyController;
-	keyController.Update();
-	if (keyController.IsEnabled())
-		return keyController;
+//  Disabling Keyboard controller since we can all use serial to debug animations
+//	static KeyboardController keyController;
+//	keyController.Update();
+//	if (keyController.IsEnabled())
+//		return keyController;
 
 	static SerialController serialController("/dev/ttyO5");
 	serialController.Update();
@@ -69,11 +69,20 @@ int main(int argc, char** argv)
 
 		JellyEffect& activeEffect = manager.GetActiveInstance();
 
-		// Transfer analog control inputs to effect
-		controller.Update();
-		const uint32_t kInputCount = 4;
-		for (uint32_t inputIndex = 0; inputIndex < kInputCount; ++inputIndex)
-			activeEffect.SetInput(inputIndex, controller.Analog(inputIndex));
+		// Transfer analog 1,2,3 inputs to effect, 0 is reserved for speed
+		activeEffect.SetInput(0, controller.Analog(1));
+		activeEffect.SetInput(1, controller.Analog(2));
+		activeEffect.SetInput(2, controller.Analog(3));
+
+		// Transfer digital 2,3 inputs to effect, 0,1 are reserved for prev/next effect
+		activeEffect.SetInput(3, controller.Digital(2));
+		activeEffect.SetInput(4, controller.Digital(3));
+
+		// Change speed based on analog 0, clamp close to middle values to 0.5
+		float speed = controller.Analog(0);
+		if (speed > 0.4f && speed < 0.6f)
+			speed = 0.5f;
+		runner.setSpeed(speed * 2.0f);
 
 		// Draw effect frame
 		runner.setEffect(&activeEffect);

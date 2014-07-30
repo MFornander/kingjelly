@@ -36,13 +36,20 @@ void BaseController::ExecuteCommand(const string& command)
 	if (sscanf(command.c_str(), "%c%d", &channel, &value) != 2)
 		return;
 
+	// Lowercase commands are analog inputs
 	if (channel >= 'a' && channel <= 'z')
 		mAnalog.at(channel - 'a') = max(0.0f, min(1.0f, static_cast<float>(value) / 100.0f));
 
-	if (channel >= 'A' && channel <= 'Z')
+	// Uppercase commands are digital inputs
+	else if (channel >= 'A' && channel <= 'Z')
 		mDigital.at(channel - 'A') = (value != 0);
 
-	if (channel == ':')
+	// Command ':' is the "enable" digital input
+	else if (channel == ':')
 		mEnabled = value != 0;
+
+	// Report strange commands to debug easier
+	else
+		fprintf(stderr, "BaseController illegal command: '%s'\n", command.c_str());
 }
 

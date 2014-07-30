@@ -56,6 +56,7 @@ public:
     void setEffect(Effect* effect);
     void setMaxFrameRate(float fps);
     void setVerbose(bool verbose = true);
+    void setSpeed(float speed);
 
     bool hasLayout() const;
     const rapidjson::Document& getLayout() const;
@@ -145,6 +146,11 @@ inline EffectRunner::EffectRunner() :
 
 inline EffectRunner::~EffectRunner()
 {
+}
+
+inline void EffectRunner::setSpeed(float speed)
+{
+	this->speed = speed;
 }
 
 inline void EffectRunner::setMaxFrameRate(float fps)

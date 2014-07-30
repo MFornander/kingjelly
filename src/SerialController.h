@@ -9,4 +9,5 @@ public:
 
 private:
 	int mFileDescriptor;
+	time_t mLastCommandSecond;
 };
