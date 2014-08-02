@@ -1,14 +1,20 @@
 #include "BaseController.h"
 
 
-BaseController::BaseController() :
+BaseController::BaseController(const string& name) :
 	mDigital(kControlCount),
 	mAnalog(kControlCount),
-	mEnabled(false)
+	mEnabled(false),
+	mName(name)
 {}
 
 BaseController::~BaseController()
 {}
+
+const string& BaseController::GetName() const
+{
+	return mName;
+}
 
 bool BaseController::IsEnabled() const
 {

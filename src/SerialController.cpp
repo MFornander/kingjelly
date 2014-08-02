@@ -4,10 +4,10 @@
 #include <unistd.h>
 
 SerialController::SerialController(const string& serialDevicePath) :
+	BaseController("Serial"),
 	mFileDescriptor(open(serialDevicePath.c_str(), O_RDONLY | O_NOCTTY | O_NDELAY)),
 	mLastCommandSecond(0)
-{
-}
+{}
 
 /// Refresh all inputs by processing any pending serial lines
 void SerialController::Update()

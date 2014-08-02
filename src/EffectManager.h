@@ -2,7 +2,7 @@
 #include "KingJelly.h"
 
 // Forwards
-class JellyEffect;
+class BaseEffect;
 
 /**
  * JellyEffect registrar, factory, and owner.
@@ -25,13 +25,13 @@ public:
 	void NextEffect(bool backwards);
 
 	// Fetch the current JellyEffect instance
-	JellyEffect& GetActiveInstance() const;
+	BaseEffect& GetActiveInstance() const;
 
 private:
-	typedef JellyEffect* (*MakeEffect)();
+	typedef BaseEffect* (*MakeEffect)();
 
 	static const uint32_t kDefaultIndex = 0; // Startup effect index
 	uint32_t              mCurrentIndex;     // Index of current JellyEffect instance
-	JellyEffect*          mCurrentEffect;    // Current JellyEffect instance, never nullptr
+	BaseEffect*          mCurrentEffect;    // Current JellyEffect instance, never nullptr
 	vector<MakeEffect>    mEffectFactory;    // List of factory methods that creates JellyEffects
 };

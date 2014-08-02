@@ -6,20 +6,23 @@
 class BaseController
 {
 public:
-	BaseController();
+	BaseController(const string& name);
 	virtual ~BaseController();
 
 	/// Called every frame before calling Digital or Analog
 	virtual void Update() = 0;
 
 	/// Return true if this controller is active
-	virtual bool IsEnabled() const;
+	const string& GetName() const;
+
+	/// Return true if this controller is active
+	bool IsEnabled() const;
 
 	/// Return the state of the indicated digital input or false if the index is out of range
-	virtual bool Digital(uint32_t index) const;
+	bool Digital(uint32_t index) const;
 
 	/// Return the value of the indicated analog input or 0 if the index is out of range
-	virtual float Analog(uint32_t index) const;
+	float Analog(uint32_t index) const;
 
 protected:
 	/// Execute a single set-input command such as "b42"
@@ -29,4 +32,5 @@ protected:
 	vector<bool> mDigital; // Current state of digital channels
 	vector<float> mAnalog; // Current state of analog channels
 	bool mEnabled;
+	string mName;
 };

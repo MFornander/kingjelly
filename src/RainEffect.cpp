@@ -21,7 +21,7 @@ uint32_t mod(int32_t a, int32_t b)
 /*---------------------------------------------------------
  *   Methods
  *--------------------------------------------------------*/
-JellyEffect* RainEffect::Create()
+BaseEffect* RainEffect::Create()
 {
 	return new RainEffect();
 }

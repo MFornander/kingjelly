@@ -1,6 +1,7 @@
 #include "AutoController.h"
 
-AutoController::AutoController()
+AutoController::AutoController() :
+	BaseController("Auto")
 {}
 
 void AutoController::Update()

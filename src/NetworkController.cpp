@@ -10,6 +10,7 @@
 
 
 NetworkController::NetworkController() :
+	BaseController("Network"),
 	m_sock(-1)
 {
 	struct sockaddr_in server;// = {AF_INET, INADDR_ANY,30000};

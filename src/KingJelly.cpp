@@ -1,11 +1,10 @@
 #include "KingJelly.h"
 #include "lib/effect_runner.h"
 #include "NetworkController.h"
-//#include "KeyboardController.h"
 #include "SerialController.h"
 #include "AutoController.h"
 #include "EffectManager.h"
-#include "JellyEffect.h"
+#include "BaseEffect.h"
 
 
 // Detect releasing button
@@ -21,27 +20,36 @@ bool ReleaseButton(const BaseController& controller, uint32_t buttonIndex)
 	return clickRelease;
 }
 
-BaseController& GetController()
+BaseController& GetController(bool verbose)
 {
-//  Disabling Keyboard controller since we can all use serial to debug animations
-//	static KeyboardController keyController;
-//	keyController.Update();
-//	if (keyController.IsEnabled())
-//		return keyController;
-
 	static SerialController serialController("/dev/ttyO5");
+	static NetworkController netController;
+	static AutoController autoController;
+	static BaseController* lastController = nullptr;
+
+	BaseController* newController;
 	serialController.Update();
 	if (serialController.IsEnabled())
-		return serialController;
+		newController = &serialController;
+	else
+	{
+		netController.Update();
+		if (netController.IsEnabled())
+			newController = &netController;
+		else
+		{
+			autoController.Update();
+			newController = &autoController;
+		}
+	}
 
-	static NetworkController netController;
-	netController.Update();
-	if (netController.IsEnabled())
-		return netController;
+	if (lastController != newController)
+	{
+		lastController = newController;
+		fprintf(stdout, "New Controller: %s\n", lastController->GetName().c_str());
+	}
 
-	static AutoController autoController;
-	autoController.Update();
-	return autoController;
+	return *newController;
 }
 
 int main(int argc, char** argv)
@@ -58,8 +66,8 @@ int main(int argc, char** argv)
 
 	while (true)
 	{
-		// Select controller based on 'IsEnabled' reading
-		BaseController& controller = GetController();
+		// Select controller based on each 'IsEnabled' reading
+		BaseController& controller = GetController(runner.isVerbose());
 
 		// Switch to next or previous effect?
 		if (ReleaseButton(controller, 0))
@@ -67,7 +75,7 @@ int main(int argc, char** argv)
 		if (ReleaseButton(controller, 1))
 			manager.NextEffect(true);
 
-		JellyEffect& activeEffect = manager.GetActiveInstance();
+		BaseEffect& activeEffect = manager.GetActiveInstance();
 
 		// Transfer analog 1,2,3 inputs to effect, 0 is reserved for speed
 		activeEffect.SetInput(0, controller.Analog(1));

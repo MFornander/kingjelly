@@ -1,26 +1,26 @@
-#include "DefaultEffect.h"
+#include "PerlinRainbow.h"
 #include "lib/noise.h"
 #include "lib/color.h"
 
 
-JellyEffect* DefaultEffect::Create()
+BaseEffect* PerlinRainbow::Create()
 {
-	return new DefaultEffect();
+	return new PerlinRainbow();
 }
 
-DefaultEffect::DefaultEffect() :
+PerlinRainbow::PerlinRainbow() :
 	mCycle(0),
 	mSaturation(0)
 {}
 
-void DefaultEffect::beginFrame(const FrameInfo& frame)
+void PerlinRainbow::beginFrame(const FrameInfo& frame)
 {
 	const float speed = Input(0) * 4.0f;
 	mSaturation = Input(1);
 	mCycle = fmodf(mCycle + frame.timeDelta * speed, 2 * M_PI);
 }
 
-void DefaultEffect::shader(Vec3& rgb, const PixelInfo& pixel) const
+void PerlinRainbow::shader(Vec3& rgb, const PixelInfo& pixel) const
 {
 	float distance = len(pixel.point);
 	float perlin3 = noise3(pixel.point);

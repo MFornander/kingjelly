@@ -1,5 +1,5 @@
 #include "EffectManager.h"
-#include "DefaultEffect.h"
+#include "PerlinRainbow.h"
 #include "RainEffect.h"
 
 
@@ -8,7 +8,7 @@ EffectManager::EffectManager() :
 	mCurrentEffect(nullptr)
 {
 	// Add each effect's create method to our factory
-	mEffectFactory.push_back(DefaultEffect::Create);
+	mEffectFactory.push_back(PerlinRainbow::Create);
 	mEffectFactory.push_back(RainEffect::Create);
 
 	// Instantiate the default effect
@@ -37,7 +37,7 @@ void EffectManager::NextEffect(bool backwards)
 	ActivateEffect(mCurrentIndex + offset);
 }
 
-JellyEffect& EffectManager::GetActiveInstance() const
+BaseEffect& EffectManager::GetActiveInstance() const
 {
 	return *mCurrentEffect;
 }

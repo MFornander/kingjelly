@@ -1,24 +1,24 @@
-#include "JellyEffect.h"
+#include "BaseEffect.h"
 
 
-JellyEffect::JellyEffect() :
+BaseEffect::BaseEffect() :
 	mCurrentInputs(kInputCount)
 {}
 
-void JellyEffect::SetInput(uint32_t index, float value)
+void BaseEffect::SetInput(uint32_t index, float value)
 {
 	if (index < kInputCount)
 		mCurrentInputs.at(index) = value;
 }
 
-float JellyEffect::Input(uint32_t index) const
+float BaseEffect::Input(uint32_t index) const
 {
 	if (index < kInputCount)
 		return mCurrentInputs.at(index);
 	return 0;
 }
 
-void JellyEffect::debug(const DebugInfo& info)
+void BaseEffect::debug(const DebugInfo& info)
 {
 	fprintf(stderr, "Controls: [%3u,%3u,%3u,%3u,%3u] --",
 		static_cast<uint32_t>(100 * mCurrentInputs.at(0)),

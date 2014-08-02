@@ -6,36 +6,33 @@
 CPP_SRCS += \
 ../src/AutoController.cpp \
 ../src/BaseController.cpp \
-../src/DefaultEffect.cpp \
+../src/BaseEffect.cpp \
 ../src/EffectManager.cpp \
-../src/JellyEffect.cpp \
-../src/KeyboardController.cpp \
 ../src/KingJelly.cpp \
 ../src/NetworkController.cpp \
+../src/PerlinRainbow.cpp \
 ../src/RainEffect.cpp \
 ../src/SerialController.cpp 
 
 OBJS += \
 ./src/AutoController.o \
 ./src/BaseController.o \
-./src/DefaultEffect.o \
+./src/BaseEffect.o \
 ./src/EffectManager.o \
-./src/JellyEffect.o \
-./src/KeyboardController.o \
 ./src/KingJelly.o \
 ./src/NetworkController.o \
+./src/PerlinRainbow.o \
 ./src/RainEffect.o \
 ./src/SerialController.o 
 
 CPP_DEPS += \
 ./src/AutoController.d \
 ./src/BaseController.d \
-./src/DefaultEffect.d \
+./src/BaseEffect.d \
 ./src/EffectManager.d \
-./src/JellyEffect.d \
-./src/KeyboardController.d \
 ./src/KingJelly.d \
 ./src/NetworkController.d \
+./src/PerlinRainbow.d \
 ./src/RainEffect.d \
 ./src/SerialController.d 
 

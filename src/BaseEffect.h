@@ -6,7 +6,7 @@
 /**
  * Base class for all KingJelly effects.
  * Please look at DefaultEffect for a full example. */
-class JellyEffect: public Effect
+class BaseEffect: public Effect
 {
 public:
 	static const uint32_t kInputCount = 5;  // Three analog and two digital (up/down)
@@ -22,7 +22,7 @@ public:
 	virtual void debug(const DebugInfo& info);
 
 protected:
-	JellyEffect();
+	BaseEffect();
 	vector<float> mCurrentInputs;
 };
 
