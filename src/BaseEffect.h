@@ -35,7 +35,7 @@ public:
 	static const uint32_t kLedCount = 100;    // LEDs per strand
 
 	JellyPixel(const Effect::PixelInfo& pixelInfo) :
-		mJellyInfo(ldiv(pixelInfo.index, kStrandCount))
+		mJellyInfo(ldiv(pixelInfo.index, kLedCount))
 	{}
 
 	uint32_t Strand() const { return static_cast<uint32_t>(mJellyInfo.quot); }
