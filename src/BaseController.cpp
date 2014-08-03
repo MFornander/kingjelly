@@ -2,11 +2,15 @@
 
 
 BaseController::BaseController(const string& name) :
-	mDigital(kControlCount),
-	mAnalog(kControlCount),
+	mDigital({0}),
+	mAnalog({0}),
 	mEnabled(false),
 	mName(name)
-{}
+{
+	// Reset initial values to 50% for all pots
+	for (int index = 0; index < kControlCount; ++index)
+		mAnalog[index] = 0.5f;
+}
 
 BaseController::~BaseController()
 {}
@@ -21,20 +25,6 @@ bool BaseController::IsEnabled() const
 	return mEnabled;
 }
 
-bool BaseController::Digital(uint32_t index) const
-{
-	if (index < mDigital.size())
-		return mDigital.at(index);
-	return false;
-}
-
-float BaseController::Analog(uint32_t index) const
-{
-	if (index < mAnalog.size())
-		return mAnalog.at(index);
-	return 0;
-}
-
 void BaseController::ExecuteCommand(const string& command)
 {
 	char channel;
@@ -43,12 +33,12 @@ void BaseController::ExecuteCommand(const string& command)
 		return;
 
 	// Lowercase commands are analog inputs
-	if (channel >= 'a' && channel <= 'z')
-		mAnalog.at(channel - 'a') = max(0.0f, min(1.0f, static_cast<float>(value) / 100.0f));
+	if (channel >= 'a' && channel <= 'd')
+		mAnalog[channel - 'a'] = max(0.0f, min(1.0f, static_cast<float>(value) / 100.0f));
 
 	// Uppercase commands are digital inputs
-	else if (channel >= 'A' && channel <= 'Z')
-		mDigital.at(channel - 'A') = (value != 0);
+	else if (channel >= 'A' && channel <= 'D')
+		mDigital[channel - 'A'] = (value != 0);
 
 	// Command ':' is the "enable" digital input
 	else if (channel == ':')

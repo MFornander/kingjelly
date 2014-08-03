@@ -25,7 +25,7 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.2042140746" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.dialect.std.1002395647" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.585048560" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value=".."/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/kingjelly}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.2025297499" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.13762908" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -50,7 +50,7 @@
 					</folderInfo>
 					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.1501832430.548214185" name="Jelly_GLServer_Layout.py" rcbsApplicability="disable" resourcePath="scripts/Jelly_GLServer_Layout.py" toolsToInvoke=""/>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="lib"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lib"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
@@ -81,7 +81,7 @@
 								<option id="gnu.cpp.compiler.exe.release.option.debugging.level.230396494" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.dialect.std.1942968093" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.513379880" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value=".."/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/kingjelly}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.438315220" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.414613027" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>

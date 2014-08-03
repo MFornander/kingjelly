@@ -21,4 +21,5 @@ private:
 	// FIELDS
 	float mCycle;
 	float mSaturation;
+	float mVerticalOffset;
 };

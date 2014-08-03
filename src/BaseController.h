@@ -19,18 +19,18 @@ public:
 	bool IsEnabled() const;
 
 	/// Return the state of the indicated digital input or false if the index is out of range
-	bool Digital(uint32_t index) const;
+	inline bool Digital(uint32_t index) const { return mDigital[index]; }
 
 	/// Return the value of the indicated analog input or 0 if the index is out of range
-	float Analog(uint32_t index) const;
+	inline float Analog(uint32_t index) const { return mAnalog[index]; }
 
 protected:
 	/// Execute a single set-input command such as "b42"
 	void ExecuteCommand(const string& command);
 
-	static const uint32_t kControlCount = 'z'-'a' + 1; // One channel per character
-	vector<bool> mDigital; // Current state of digital channels
-	vector<float> mAnalog; // Current state of analog channels
-	bool mEnabled;
+	static const uint32_t kControlCount = 5; // One channel per character
+	bool   mDigital[kControlCount]; // Current state of digital channels
+	float  mAnalog[kControlCount];  // Current state of analog channels
+	bool   mEnabled;
 	string mName;
 };

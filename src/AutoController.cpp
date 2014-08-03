@@ -8,20 +8,15 @@ AutoController::AutoController() :
 {
 	std::srand(std::time(0));
 
-        mAnalog[0] = 0.5f;
-        mAnalog[1] = 0.5f;
-        mAnalog[2] = 0.5f;
-        mAnalog[3] = 0.5f;
+	mAnalog[0] = 0.5f;
+	mAnalog[1] = 0.5f;
+	mAnalog[2] = 0.5f;
+	mAnalog[3] = 0.5f;
 
-        mDigital[0] = false;
-        mDigital[1] = false;
-        mDigital[2] = false;
-        mDigital[3] = false;
-}
-
-float GetRandomAnalogValue()
-{
-	return 0.1f + (0.8f * std::rand() / RAND_MAX);
+	mDigital[0] = false;
+	mDigital[1] = false;
+	mDigital[2] = false;
+	mDigital[3] = false;
 }
 
 void AutoController::Update(uint32_t seconds, bool verbose)
@@ -43,4 +38,10 @@ void AutoController::Update(uint32_t seconds, bool verbose)
 	{
 		mDigital[0] = false;
 	}
+}
+
+
+float AutoController::GetRandomAnalogValue()
+{
+	return 0.1f + (0.8f * std::rand() / RAND_MAX);
 }

@@ -5,9 +5,15 @@
 
 SerialController::SerialController(const string& serialDevicePath) :
 	BaseController("Serial"),
-	mFileDescriptor(open(serialDevicePath.c_str(), O_RDONLY | O_NOCTTY | O_NDELAY)),
+	mFileDescriptor(-1),
 	mLastCommandTime(0)
-{}
+{
+	mEnabled = true;
+	mFileDescriptor = open(serialDevicePath.c_str(), O_RDONLY | O_NOCTTY | O_NDELAY);
+	if (mFileDescriptor < 0)
+		fprintf(stderr, "SerialController: Open Error=%d\n", mFileDescriptor);
+
+}
 
 /// Refresh all inputs by processing any pending serial lines
 void SerialController::Update(uint32_t seconds, bool verbose)
@@ -19,6 +25,7 @@ void SerialController::Update(uint32_t seconds, bool verbose)
 	ssize_t readCount = read(mFileDescriptor, command, 255);
 	if (readCount <= 0)
 	{
+#ifdef NDEBUG
 		// Disable if no data was received in 5 seconds
 		const uint32_t kSecondsUntilDisable = 5;
 		if ((seconds - mLastCommandTime) >= kSecondsUntilDisable && mEnabled)
@@ -26,6 +33,7 @@ void SerialController::Update(uint32_t seconds, bool verbose)
 			mEnabled = false;
 			fprintf(stdout, "SerialController: Timeout");
 		}
+#endif
 	}
 	else
 	{
