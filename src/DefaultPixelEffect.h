@@ -15,6 +15,6 @@ private:
 
 	// FIELDS
 	float mCycle;
-    float ledPositionBasedOnMCycle = 1 / (2 * M_PI);
-    float verticalPosition = 0.0;
+    float ledPositionBasedOnMCycle;
+    float verticalPosition;
 };

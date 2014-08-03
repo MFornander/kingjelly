@@ -7,14 +7,16 @@ BaseEffect* DefaultPixelEffect::Create() {
 }
 
 DefaultPixelEffect::DefaultPixelEffect() :
-	mCycle(0)
-//	mSaturation(0)
-{}
+		mCycle(0),
+		ledPositionBasedOnMCycle(1.0f / (2.0f * M_PI)),
+        verticalPosition(0.0f)
+{
+}
 
 void DefaultPixelEffect::beginFrame(const FrameInfo& frame) {
-	const float speed = 1.0f;// Input(0) * 4.0f;
+	const float speed = 1.0f; // Input(0) * 4.0f;
 	mCycle = fmodf(mCycle + frame.timeDelta * speed, 2 * M_PI); //cycles between 0-2pi based on speed
-    verticalPosition = mCycle * ledPositionBasedOnMCycle;
+	verticalPosition = mCycle * ledPositionBasedOnMCycle;
 
 }
 
