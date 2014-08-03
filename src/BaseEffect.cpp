@@ -20,7 +20,7 @@ float BaseEffect::Input(uint32_t index) const
 
 void BaseEffect::debug(const DebugInfo& info)
 {
-	fprintf(stderr, "Controls: [%3u,%3u,%3u,%3u,%3u] --",
+	fprintf(stderr, "Input:[%3u,%3u,%3u,%3u,%3u]",
 		static_cast<uint32_t>(100 * mCurrentInputs.at(0)),
 		static_cast<uint32_t>(100 * mCurrentInputs.at(1)),
 		static_cast<uint32_t>(100 * mCurrentInputs.at(2)),

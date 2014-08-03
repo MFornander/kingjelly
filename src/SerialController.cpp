@@ -31,7 +31,7 @@ void SerialController::Update(uint32_t seconds, bool verbose)
 		if ((seconds - mLastCommandTime) >= kSecondsUntilDisable && mEnabled)
 		{
 			mEnabled = false;
-			fprintf(stdout, "SerialController: Timeout");
+			fprintf(stdout, "SerialController: Disable after %d secs\n", kSecondsUntilDisable);
 		}
 #endif
 	}
@@ -39,7 +39,7 @@ void SerialController::Update(uint32_t seconds, bool verbose)
 	{
 		command[readCount] = 0;
 		if (verbose)
-			fprintf(stdout, "SerialController: command '%s'", command);
+			fprintf(stdout, "SerialController: Command = %s", command);
 		ExecuteCommand(command);
 		mLastCommandTime = seconds;
 	}

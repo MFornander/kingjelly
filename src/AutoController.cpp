@@ -32,7 +32,7 @@ void AutoController::Update(uint32_t seconds, bool verbose)
 			mAnalog[index] = GetRandomAnalogValue();
 
 		if (verbose)
-			fprintf(stdout, "AutoController: Next (%.2f, %.2f, %.2f, %.2f)\n", mAnalog[0], mAnalog[1], mAnalog[2], mAnalog[3]);
+			fprintf(stdout, "AutoController: Switch to new effect with analog: (%.2f, %.2f, %.2f, %.2f)\n", mAnalog[0], mAnalog[1], mAnalog[2], mAnalog[3]);
 	}
 	else
 	{

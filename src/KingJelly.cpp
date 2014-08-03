@@ -10,7 +10,7 @@
 // Detect releasing button
 bool ReleaseButton(const BaseController& controller, uint32_t buttonIndex)
 {
-	static bool sLastState[4] = {false,false,false,false};
+	static bool sLastState[4] = {0};
 	buttonIndex = min<uint32_t>(buttonIndex, 3);
 
 	bool currentState = controller.Digital(buttonIndex);
@@ -28,8 +28,8 @@ BaseController& GetController(bool verbose)
 	static AutoController autoController;
 	static BaseController* lastController = nullptr;
 
-        timeval now;
-        gettimeofday(&now, 0);
+	timeval now;
+	gettimeofday(&now, 0);
 
 	BaseController* newController;
 	serialController.Update(now.tv_sec, verbose);
@@ -51,7 +51,7 @@ BaseController& GetController(bool verbose)
 	{
 		lastController = newController;
 		if (verbose)
-			fprintf(stdout, "New Controller: %s\n", lastController->GetName().c_str());
+			fprintf(stdout, "Active Controller: %s\n", lastController->GetName().c_str());
 	}
 
 	return *newController;
@@ -75,19 +75,19 @@ int main(int argc, char** argv)
 		BaseController& controller = GetController(runner.isVerbose());
 
 		// Switch to next or previous effect?
-		if (ReleaseButton(controller, 0))
+		if (ReleaseButton(controller, 0)) // left joystick = prev effect
 			manager.NextEffect(false);
-		if (ReleaseButton(controller, 1))
+		if (ReleaseButton(controller, 1)) // right joystick = next effect
 			manager.NextEffect(true);
 
 		BaseEffect& activeEffect = manager.GetActiveInstance();
 
-		// Transfer analog 1,2,3 inputs to effect, 0 is reserved for speed
+		// Transfer analog 1,2,3 to effect, 0 is reserved for speed
 		activeEffect.SetInput(0, controller.Analog(1));
 		activeEffect.SetInput(1, controller.Analog(2));
 		activeEffect.SetInput(2, controller.Analog(3));
 
-		// Transfer digital 2,3 inputs to effect, 0,1 are reserved for prev/next effect
+		// Transfer digital 2,3 to effect, 0,1 are reserved for prev/next effect
 		activeEffect.SetInput(3, controller.Digital(2));
 		activeEffect.SetInput(4, controller.Digital(3));
 

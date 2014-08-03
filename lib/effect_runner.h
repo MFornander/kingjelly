@@ -413,7 +413,7 @@ inline void EffectRunner::usage(const char *name)
 
 inline void EffectRunner::debug()
 {
-    fprintf(stderr, " %7.2f FPS -- %6.2f%% CPU [%.3fms busy, %.3fms idle, %.3fms jitter]\n",
+    fprintf(stderr, " %6.2f FPS --%7.2f%% CPU [%.3fms busy, %.3fms idle,%7.3fms jitter] ",
         getFrameRate(),
         getPercentBusy(),
         1e3f * getBusyTimePerFrame(),
@@ -428,6 +428,7 @@ inline void EffectRunner::debug()
         Effect::DebugInfo d(*this);
         effect->debug(d);
     }
+    fprintf(stderr, "\n");
 }
 
 inline bool EffectRunner::parseArgument(int &i, int &argc, char **argv)
