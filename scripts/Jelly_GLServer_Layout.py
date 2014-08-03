@@ -2,6 +2,7 @@
 
 from math import *
 
+MULTIPLIER = 1
 # number of strands
 NUM_STRANDS = 16
 
@@ -9,13 +10,13 @@ NUM_STRANDS = 16
 NUM_LEDS = 100
 
 # horizontal radius in m
-RADIUS_H = 1 
+RADIUS_H = 1 * MULTIPLIER 
 
 # vertical radius in m
-RADIUS_V = 0.6 
+RADIUS_V = 0.6 * MULTIPLIER  
 
 # length of LED strand in m
-LEN_STRAND = 3.0
+LEN_STRAND = 3.0 * MULTIPLIER
 
 # distance between LEDs in m
 DIST_BTWN_LEDS = LEN_STRAND / NUM_LEDS

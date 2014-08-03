@@ -1,6 +1,7 @@
 #include "EffectManager.h"
 #include "PerlinRainbow.h"
 #include "RainEffect.h"
+#include "DefaultPixelEffect.h"
 
 
 EffectManager::EffectManager() :
@@ -10,6 +11,7 @@ EffectManager::EffectManager() :
 	// Add each effect's create method to our factory
 	mEffectFactory.push_back(PerlinRainbow::Create);
 	mEffectFactory.push_back(RainEffect::Create);
+	mEffectFactory.push_back(DefaultPixelEffect::Create);
 
 	// Instantiate the default effect
 	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();

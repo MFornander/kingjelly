@@ -7,6 +7,7 @@ CPP_SRCS += \
 ../src/AutoController.cpp \
 ../src/BaseController.cpp \
 ../src/BaseEffect.cpp \
+../src/DefaultPixelEffect.cpp \
 ../src/EffectManager.cpp \
 ../src/KingJelly.cpp \
 ../src/NetworkController.cpp \
@@ -18,6 +19,7 @@ OBJS += \
 ./src/AutoController.o \
 ./src/BaseController.o \
 ./src/BaseEffect.o \
+./src/DefaultPixelEffect.o \
 ./src/EffectManager.o \
 ./src/KingJelly.o \
 ./src/NetworkController.o \
@@ -29,6 +31,7 @@ CPP_DEPS += \
 ./src/AutoController.d \
 ./src/BaseController.d \
 ./src/BaseEffect.d \
+./src/DefaultPixelEffect.d \
 ./src/EffectManager.d \
 ./src/KingJelly.d \
 ./src/NetworkController.d \
@@ -41,7 +44,7 @@ CPP_DEPS += \
 src/%.o: ../src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -std=c++0x -I".." -O3 -p -Wall -Wextra -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -std=c++0x -I".." -O3 -Wall -Wextra -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
