@@ -6,7 +6,7 @@ AutoController::AutoController() :
 	BaseController("Auto"),
 	mLastSwitchTime(0)
 {
-	std::srand(std::time(0));
+	std::srand(static_cast<unsigned int>(std::time(0)));
 
 	mAnalog[0] = 0.5f;
 	mAnalog[1] = 0.5f;
@@ -43,5 +43,5 @@ void AutoController::Update(uint32_t seconds, bool verbose)
 
 float AutoController::GetRandomAnalogValue()
 {
-	return 0.1f + (0.8f * std::rand() / RAND_MAX);
+	return 0.1f + 0.8f * static_cast<float>(std::rand()) / RAND_MAX;
 }

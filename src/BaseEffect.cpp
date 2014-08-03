@@ -18,7 +18,7 @@ float BaseEffect::Input(uint32_t index) const
 	return 0;
 }
 
-void BaseEffect::debug(const DebugInfo& info)
+void BaseEffect::debug(const DebugInfo& /*info*/)
 {
 	fprintf(stderr, "Input:[%3u,%3u,%3u,%3u,%3u]",
 		static_cast<uint32_t>(100 * mCurrentInputs.at(0)),

@@ -154,7 +154,7 @@ public:
             return pixels.size();
         }
 
-        inline Real kdtree_distance(const Real *p1, const size_t idx_p2, size_t size) const
+        inline Real kdtree_distance(const Real *p1, const size_t idx_p2, size_t /*size*/) const
         {
             Real d0 = p1[0] - pixels[idx_p2].point[0];
             Real d1 = p1[1] - pixels[idx_p2].point[1];
@@ -320,10 +320,10 @@ inline Effect::DebugInfo::DebugInfo(EffectRunner& runner) :
 {}
 
 inline Effect::~Effect() {}
-inline void Effect::beginFrame(const FrameInfo &f) {}
-inline void Effect::endFrame(const FrameInfo &f) {}
-inline void Effect::debug(const DebugInfo &f) {}
-inline void Effect::postProcess(const Vec3& rgb, const PixelInfo& p) {}
+inline void Effect::beginFrame(const FrameInfo&) {}
+inline void Effect::endFrame(const FrameInfo&) {}
+inline void Effect::debug(const DebugInfo&) {}
+inline void Effect::postProcess(const Vec3&, const PixelInfo&) {}
 
 
 static inline float sq(float a)

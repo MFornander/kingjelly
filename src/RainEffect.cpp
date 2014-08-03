@@ -34,7 +34,7 @@ RainEffect::RainEffect() :
 	mLen(10)
 {}
 
-void RainEffect::beginFrame(const FrameInfo& frame)
+void RainEffect::beginFrame(const FrameInfo& /*frame*/)
 {
 	mMod   = 90;// + (int)(Input(0)*255.0);
 	mHue   = Input(0);

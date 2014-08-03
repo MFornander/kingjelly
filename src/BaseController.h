@@ -1,5 +1,6 @@
 #pragma once
 #include "KingJelly.h"
+#include <cstdint>
 
 /**
  * Low-level abstract view of the control box. */
@@ -28,9 +29,11 @@ protected:
 	/// Execute a single set-input command such as "b42"
 	void ExecuteCommand(const string& command);
 
-	static const uint32_t kControlCount = 5; // One channel per character
-	bool   mDigital[kControlCount]; // Current state of digital channels
-	float  mAnalog[kControlCount];  // Current state of analog channels
-	bool   mEnabled;
-	string mName;
+	static const int kControlCount = 4; // One channel per character
+	const string mName;
+	bool         mEnabled;
+	bool         mDigital[kControlCount]; // Current state of digital channels
+	float        mAnalog[kControlCount];  // Current state of analog channels
+
+
 };

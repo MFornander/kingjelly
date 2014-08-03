@@ -11,7 +11,7 @@ SerialController::SerialController(const string& serialDevicePath) :
 	mEnabled = true;
 	mFileDescriptor = open(serialDevicePath.c_str(), O_RDONLY | O_NOCTTY | O_NDELAY);
 	if (mFileDescriptor < 0)
-		fprintf(stderr, "SerialController: Open Error=%d\n", mFileDescriptor);
+		fprintf(stdout, "SerialController: Open Error=%d\n", mFileDescriptor);
 
 }
 

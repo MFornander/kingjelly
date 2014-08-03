@@ -1,5 +1,6 @@
 #pragma once
 #include "KingJelly.h"
+#include <vector>
 
 // Forwards
 class BaseEffect;
@@ -32,6 +33,6 @@ private:
 
 	static const uint32_t kDefaultIndex = 0; // Startup effect index
 	uint32_t              mCurrentIndex;     // Index of current JellyEffect instance
-	BaseEffect*          mCurrentEffect;    // Current JellyEffect instance, never nullptr
+	BaseEffect*           mCurrentEffect;    // Current JellyEffect instance, never nullptr
 	vector<MakeEffect>    mEffectFactory;    // List of factory methods that creates JellyEffects
 };

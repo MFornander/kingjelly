@@ -38,8 +38,8 @@ public:
 		mJellyInfo(ldiv(pixelInfo.index, kStrandCount))
 	{}
 
-	uint32_t Strand() const { return mJellyInfo.quot; }
-	uint32_t Led() const    { return mJellyInfo.rem; }
+	uint32_t Strand() const { return static_cast<uint32_t>(mJellyInfo.quot); }
+	uint32_t Led() const    { return static_cast<uint32_t>(mJellyInfo.rem); }
 
 private:
 	const ldiv_t mJellyInfo;
