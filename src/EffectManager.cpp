@@ -3,9 +3,11 @@
 #include "RainEffect.h"
 #include "DefaultPixelEffect.h"
 #include "OriginalRainEffect.h"
+#include "ColorHalosEffect.h"
+#include "GlitterEffect.h"
 
 EffectManager::EffectManager() :
-	mCurrentIndex(kDefaultIndex),
+	mCurrentIndex(0),
 	mCurrentEffect(nullptr)
 {
 	// Add each effect's create method to our factory
@@ -13,8 +15,12 @@ EffectManager::EffectManager() :
 	mEffectFactory.push_back(DefaultPixelEffect::Create);
 	mEffectFactory.push_back(PerlinRainbow::Create);
 	mEffectFactory.push_back(RainEffect::Create);
+	mEffectFactory.push_back(ColorHalosEffect::Create);
+	mEffectFactory.push_back(GlitterEffect::Create);
+	// Add them here last to keep this list merge-easy
 
-	// Instantiate the default effect
+	// Instantiate the last in the list above to facilitate effect creation
+	mCurrentIndex = mEffectFactory.size() - 1;
 	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();
 }
 

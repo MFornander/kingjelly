@@ -7,8 +7,10 @@ CPP_SRCS += \
 ../src/AutoController.cpp \
 ../src/BaseController.cpp \
 ../src/BaseEffect.cpp \
+../src/ColorHalosEffect.cpp \
 ../src/DefaultPixelEffect.cpp \
 ../src/EffectManager.cpp \
+../src/GlitterEffect.cpp \
 ../src/KingJelly.cpp \
 ../src/NetworkController.cpp \
 ../src/OriginalRainEffect.cpp \
@@ -20,8 +22,10 @@ OBJS += \
 ./src/AutoController.o \
 ./src/BaseController.o \
 ./src/BaseEffect.o \
+./src/ColorHalosEffect.o \
 ./src/DefaultPixelEffect.o \
 ./src/EffectManager.o \
+./src/GlitterEffect.o \
 ./src/KingJelly.o \
 ./src/NetworkController.o \
 ./src/OriginalRainEffect.o \
@@ -33,8 +37,10 @@ CPP_DEPS += \
 ./src/AutoController.d \
 ./src/BaseController.d \
 ./src/BaseEffect.d \
+./src/ColorHalosEffect.d \
 ./src/DefaultPixelEffect.d \
 ./src/EffectManager.d \
+./src/GlitterEffect.d \
 ./src/KingJelly.d \
 ./src/NetworkController.d \
 ./src/OriginalRainEffect.d \

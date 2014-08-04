@@ -13,17 +13,23 @@ public:
 
 	// Input setter used by main loop to transfer controller data
 	// TODO: refactor with less hardcoded counts
-	void  SetInput(uint32_t index, float value);
-
-	// Input getter used by the effects
-	float Input(uint32_t index) const;
+	void SetInput(uint32_t index, float value);
 
 	// Print out all inputs every second in verbose mode
 	virtual void debug(const DebugInfo& info);
 
 protected:
 	BaseEffect();
+
+	// Input getter used by the effects
+	float Input(uint32_t index) const;
+
+	// Return true if the given input was non-zero last call and zero this call
+	bool InputClicked(uint32_t index);
+
+	// FIELDS
 	vector<float> mCurrentInputs;
+	vector<bool>  mLastDown;
 };
 
 /**

@@ -2,7 +2,8 @@
 
 
 BaseEffect::BaseEffect() :
-	mCurrentInputs(kInputCount)
+	mCurrentInputs(kInputCount),
+	mLastDown(kInputCount)
 {}
 
 void BaseEffect::SetInput(uint32_t index, float value)
@@ -18,6 +19,16 @@ float BaseEffect::Input(uint32_t index) const
 	return 0;
 }
 
+bool BaseEffect::InputClicked(uint32_t index)
+{
+	if (index >= kInputCount)
+		return false;
+
+	const bool clicked = mCurrentInputs.at(index) == 0 && mLastDown.at(index);
+	mLastDown[index] = mCurrentInputs.at(index) != 0;
+	return clicked;
+}
+
 void BaseEffect::debug(const DebugInfo& /*info*/)
 {
 	fprintf(stderr, "Input:[%3u,%3u,%3u,%3u,%3u]",
@@ -27,3 +38,4 @@ void BaseEffect::debug(const DebugInfo& /*info*/)
 		static_cast<uint32_t>(100 * mCurrentInputs.at(3)),
 		static_cast<uint32_t>(100 * mCurrentInputs.at(4)));
 }
+

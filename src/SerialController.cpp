@@ -18,16 +18,14 @@ SerialController::SerialController(const string& serialDevicePath) :
 /// Refresh all inputs by processing any pending serial lines
 void SerialController::Update(uint32_t seconds, bool verbose)
 {
-	 if (mFileDescriptor < 0)
-		 return;
-
 	char command[256];
 	ssize_t readCount = read(mFileDescriptor, command, 255);
 	if (readCount <= 0)
 	{
-#ifdef NDEBUG
-		// Disable if no data was received in 5 seconds
-		const uint32_t kSecondsUntilDisable = 5;
+// Only require 5 sec pings in Release
+#ifndef DEBUG
+		// Disable if no data was received in 10 seconds
+		const uint32_t kSecondsUntilDisable = 10;
 		if ((seconds - mLastCommandTime) >= kSecondsUntilDisable && mEnabled)
 		{
 			mEnabled = false;
