@@ -11,6 +11,7 @@ CPP_SRCS += \
 ../src/EffectManager.cpp \
 ../src/KingJelly.cpp \
 ../src/NetworkController.cpp \
+../src/OriginalRainEffect.cpp \
 ../src/PerlinRainbow.cpp \
 ../src/RainEffect.cpp \
 ../src/SerialController.cpp 
@@ -23,6 +24,7 @@ OBJS += \
 ./src/EffectManager.o \
 ./src/KingJelly.o \
 ./src/NetworkController.o \
+./src/OriginalRainEffect.o \
 ./src/PerlinRainbow.o \
 ./src/RainEffect.o \
 ./src/SerialController.o 
@@ -35,6 +37,7 @@ CPP_DEPS += \
 ./src/EffectManager.d \
 ./src/KingJelly.d \
 ./src/NetworkController.d \
+./src/OriginalRainEffect.d \
 ./src/PerlinRainbow.d \
 ./src/RainEffect.d \
 ./src/SerialController.d 

@@ -2,13 +2,14 @@
 #include "PerlinRainbow.h"
 #include "RainEffect.h"
 #include "DefaultPixelEffect.h"
-
+#include "OriginalRainEffect.h"
 
 EffectManager::EffectManager() :
 	mCurrentIndex(kDefaultIndex),
 	mCurrentEffect(nullptr)
 {
 	// Add each effect's create method to our factory
+	mEffectFactory.push_back(OriginalRainEffect::Create);
 	mEffectFactory.push_back(DefaultPixelEffect::Create);
 	mEffectFactory.push_back(PerlinRainbow::Create);
 	mEffectFactory.push_back(RainEffect::Create);
