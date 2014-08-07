@@ -30,7 +30,7 @@ void OriginalRainEffect::beginFrame(const FrameInfo& frame) {
 			for (uint32_t tailIndex = 0; tailIndex < drop.tail; ++tailIndex) {
 				float brightness = (255 - tailIndex * 255 / drop.tail) / 100.0f;
 				int32_t newLed = led - tailIndex;
-				if (newLed >= 0 && newLed < JellyPixel::kLedCount) {
+				if (newLed >= 0 && newLed < static_cast<int32_t>(JellyPixel::kLedCount)) {
 					pixels[drop.strip][newLed].h = drop.hue;
 					pixels[drop.strip][newLed].s = drop.saturation;
 					pixels[drop.strip][newLed].v = brightness;

@@ -22,7 +22,7 @@ void DefaultPixelEffect::shader(Vec3& rgb, const PixelInfo& pixel) const {
 
 	JellyPixel jp = JellyPixel(pixel);
 
-	int strand = jp.Strand();
+	//int strand = jp.Strand();
 	int led = jp.Led();
 	//float verticalPosition = mCycle * ledPositionBasedOnMCycle;
 	//cout << "Strand: " << strand << ". LED: " << led << "\n";

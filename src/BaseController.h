@@ -26,9 +26,6 @@ public:
 	inline float Analog(uint32_t index) const { return mAnalog[index]; }
 
 protected:
-	/// Execute a single set-input command such as "b42"
-	void ExecuteCommand(const string& command);
-
 	static const int kControlCount = 4; // One channel per character
 	const string mName;
 	bool         mEnabled;

@@ -1,10 +1,8 @@
 #include "EffectManager.h"
-#include "PerlinRainbow.h"
+#include "EffectMattias.h"
 #include "RainEffect.h"
 #include "DefaultPixelEffect.h"
 #include "OriginalRainEffect.h"
-#include "ColorHalosEffect.h"
-#include "GlitterEffect.h"
 
 EffectManager::EffectManager() :
 	mCurrentIndex(0),
@@ -15,8 +13,8 @@ EffectManager::EffectManager() :
 	mEffectFactory.push_back(DefaultPixelEffect::Create);
 	mEffectFactory.push_back(PerlinRainbow::Create);
 	mEffectFactory.push_back(RainEffect::Create);
-	mEffectFactory.push_back(ColorHalosEffect::Create);
-	mEffectFactory.push_back(GlitterEffect::Create);
+	mEffectFactory.push_back(ColorFlow::Create);
+	mEffectFactory.push_back(Glitter::Create);
 	// Add them here last to keep this list merge-easy
 
 	// Instantiate the last in the list above to facilitate effect creation
