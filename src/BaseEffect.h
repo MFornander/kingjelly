@@ -9,11 +9,20 @@
 class BaseEffect: public Effect
 {
 public:
-	static const uint32_t kInputCount = 5;  // Three analog and two digital (up/down)
+	enum EInput
+	{
+		Pot0 = 0,
+		Pot1,
+		Pot2,
+		Pot3,
+		JoyUp,
+		JoyDown,
+		kInputCount,
+	};
 
 	/// Input setter used by main loop to transfer controller data
 	/// TODO: refactor with less hardcoded counts
-	void SetInput(uint32_t index, float value);
+	void SetInput(EInput index, float value);
 
 	/// Print out all inputs every second in verbose mode
 	virtual void debug(const DebugInfo& info);
@@ -23,10 +32,10 @@ protected:
 	BaseEffect();
 
 	/// Input getter used by the effects
-	float Input(uint32_t index) const;
+	float Input(EInput index) const;
 
 	/// Return true if the given input was non-zero last call and zero this call
-	bool InputClicked(uint32_t index);
+	bool InputClicked(EInput index);
 
 	// FIELDS
 	vector<float> mCurrentInputs;

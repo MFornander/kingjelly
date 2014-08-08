@@ -30,7 +30,7 @@ private:
 
 	Hsv pixels[JellyPixel::kStrandCount][JellyPixel::kLedCount];
 
-	static const int mDropCount = 40;
-	RainDrop mDrops[mDropCount];
+	static const int kMaxDropCount = 100;
+	RainDrop mDrops[kMaxDropCount];
 	float totalTime;
 };

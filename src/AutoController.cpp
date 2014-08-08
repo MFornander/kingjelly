@@ -21,6 +21,10 @@ AutoController::AutoController() :
 
 void AutoController::Update(uint32_t seconds, bool verbose)
 {
+	// Disable switching effects for now to stay at the first
+	// effect on boot with no controller attached.
+	return;
+
 	const uint32_t kSecondsBetweenSwitch = 60;
 
 	if ((seconds - mLastSwitchTime) > kSecondsBetweenSwitch)

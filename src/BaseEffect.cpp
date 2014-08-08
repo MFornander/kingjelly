@@ -6,36 +6,37 @@ BaseEffect::BaseEffect() :
 	mLastDown(kInputCount)
 {}
 
-void BaseEffect::SetInput(uint32_t index, float value)
+void BaseEffect::SetInput(EInput input, float value)
 {
-	if (index < kInputCount)
-		mCurrentInputs.at(index) = value;
+	if (input < kInputCount)
+		mCurrentInputs.at(input) = value;
 }
 
-float BaseEffect::Input(uint32_t index) const
+float BaseEffect::Input(EInput input) const
 {
-	if (index < kInputCount)
-		return mCurrentInputs.at(index);
+	if (input < kInputCount)
+		return mCurrentInputs.at(input);
 	return 0;
 }
 
-bool BaseEffect::InputClicked(uint32_t index)
+bool BaseEffect::InputClicked(EInput input)
 {
-	if (index >= kInputCount)
+	if (input >= kInputCount)
 		return false;
 
-	const bool clicked = mCurrentInputs.at(index) == 0 && mLastDown.at(index);
-	mLastDown[index] = mCurrentInputs.at(index) != 0;
+	const bool clicked = Input(input) == 0 && mLastDown.at(input);
+	mLastDown[input] = Input(input) != 0;
 	return clicked;
 }
 
 void BaseEffect::debug(const DebugInfo& /*info*/)
 {
-	fprintf(stderr, "Input:[%3u,%3u,%3u,%3u,%3u]",
-		static_cast<uint32_t>(100 * mCurrentInputs.at(0)),
-		static_cast<uint32_t>(100 * mCurrentInputs.at(1)),
-		static_cast<uint32_t>(100 * mCurrentInputs.at(2)),
-		static_cast<uint32_t>(100 * mCurrentInputs.at(3)),
-		static_cast<uint32_t>(100 * mCurrentInputs.at(4)));
+	fprintf(stderr, "Input:[%3u,%3u,%3u,%3u,%3u,%3u]",
+		static_cast<uint32_t>(100 * Input(Pot0)),
+		static_cast<uint32_t>(100 * Input(Pot1)),
+		static_cast<uint32_t>(100 * Input(Pot2)),
+		static_cast<uint32_t>(100 * Input(Pot3)),
+		static_cast<uint32_t>(100 * Input(JoyUp)),
+		static_cast<uint32_t>(100 * Input(JoyDown)));
 }
 

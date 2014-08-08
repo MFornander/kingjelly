@@ -37,7 +37,8 @@ cp flask-service /etc/init.d/
 update-rc.d flask-service defaults
 
 ## TODO: Enable UART5 automatically
-echo "Please edit /boot/uEnv.txt such that cmdline reads:\ncmdline=quiet init=/lib/systemd/systemd capemgr.enable_partno=BB-UART5"
-
+echo "Please edit /boot/uEnv.txt such that cmdline reads:
+echo "cmdline=quiet init=/lib/systemd/systemd capemgr.enable_partno=BB-UART5"
+echo
 
 echo "Reboot to enable PRUs and awaken the KingJelly"

@@ -11,10 +11,10 @@ PerlinRainbow::PerlinRainbow() :
 
 void PerlinRainbow::beginFrame(const FrameInfo& frame)
 {
-	const float speed = Input(0);
-	mSaturation = Input(1);
-	mCycle = fmodf(mCycle + frame.timeDelta * speed, 2 * M_PI);
-	mVerticalOffset += Input(2) * 2.0f * frame.timeDelta;
+	const float speed2 = Input(Pot1);
+	mSaturation = Input(Pot2);
+	mCycle = fmodf(mCycle + frame.timeDelta * speed2, 2 * M_PI);
+	mVerticalOffset += Input(Pot3) * 2.0f * frame.timeDelta;
 }
 
 void PerlinRainbow::shader(Vec3& rgb, const PixelInfo& pixel) const
@@ -40,13 +40,13 @@ ColorFlow::ColorFlow() :
 
 void ColorFlow::beginFrame(const FrameInfo& frame)
 {
-	if (InputClicked(3))
+	if (InputClicked(JoyUp))
 		mPerlinOctaves = min(5, mPerlinOctaves+1);
-	if (InputClicked(4))
+	if (InputClicked(JoyDown))
 		mPerlinOctaves = max(0, mPerlinOctaves-1);
 
 	for (int index = 0; index < 3; ++index)
-		mPosition[index] += frame.timeDelta * (Input(index) - 0.5f);
+		mPosition[index] += frame.timeDelta * (Input(static_cast<EInput>(index)) - 0.5f);
 }
 
 void ColorFlow::shader(Vec3& rgb, const PixelInfo& pixel) const
@@ -68,9 +68,9 @@ Glitter::Glitter() :
 
 void Glitter::beginFrame(const FrameInfo& frame)
 {
-	mChance = Input(0) * RAND_MAX;
+	mChance = Input(Pot1) * RAND_MAX;
 	mCycle += frame.timeDelta;
-	mBrightness = 2.0f * Input(1) + sin(mCycle) / 2.0f;
+	mBrightness = 2.0f * Input(Pot2) + sin(mCycle) / 2.0f;
 }
 
 void Glitter::shader(Vec3& rgb, const PixelInfo& pixel) const

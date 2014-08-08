@@ -82,18 +82,19 @@ int main(int argc, char** argv)
 
 		BaseEffect& activeEffect = manager.GetActiveInstance();
 
-		// Transfer analog 1,2,3 to effect, 0 is reserved for speed
-		activeEffect.SetInput(0, controller.Analog(1));
-		activeEffect.SetInput(1, controller.Analog(2));
-		activeEffect.SetInput(2, controller.Analog(3));
+		// Transfer analog 1,2,3 to effect, 0 is speed
+		activeEffect.SetInput(BaseEffect::Pot0, controller.Analog(0));
+		activeEffect.SetInput(BaseEffect::Pot1, controller.Analog(1));
+		activeEffect.SetInput(BaseEffect::Pot2, controller.Analog(2));
+		activeEffect.SetInput(BaseEffect::Pot3, controller.Analog(3));
 
 		// Transfer digital 2,3 to effect, 0,1 are reserved for prev/next effect
-		activeEffect.SetInput(3, controller.Digital(2));
-		activeEffect.SetInput(4, controller.Digital(3));
+		activeEffect.SetInput(BaseEffect::JoyUp, controller.Digital(2));
+		activeEffect.SetInput(BaseEffect::JoyDown, controller.Digital(3));
 
 		// Change speed based on analog 0, clamp close to middle values to 0.5
 		float speed = controller.Analog(0);
-		if (speed > 0.4f && speed < 0.6f)
+		if (speed >= 0.45f && speed <= 0.55f)
 			speed = 0.5f;
 		runner.setSpeed(speed * 2.0f);
 

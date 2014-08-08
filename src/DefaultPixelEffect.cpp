@@ -1,5 +1,4 @@
 #include "DefaultPixelEffect.h"
-#include "lib/noise.h"
 #include "lib/color.h"
 
 BaseEffect* DefaultPixelEffect::Create() {

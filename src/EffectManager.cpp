@@ -15,10 +15,8 @@ EffectManager::EffectManager() :
 	mEffectFactory.push_back(RainEffect::Create);
 	mEffectFactory.push_back(ColorFlow::Create);
 	mEffectFactory.push_back(Glitter::Create);
-	// Add them here last to keep this list merge-easy
+	// Add new effects here at the end to keep this list merge-easy
 
-	// Instantiate the last in the list above to facilitate effect creation
-	mCurrentIndex = mEffectFactory.size() - 1;
 	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();
 }
 

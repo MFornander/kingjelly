@@ -36,10 +36,10 @@ RainEffect::RainEffect() :
 
 void RainEffect::beginFrame(const FrameInfo& /*frame*/)
 {
-	mMod   = 90;// + (int)(Input(0)*255.0);
-	mHue   = Input(0);
- 	mSpeed = (int) ((1.0 - Input(1)) * 20) + 1;
- 	mLen   = (int) (Input(2)*50) + 1;
+	mMod   = Input(Pot0)*255.0f;
+	mHue   = Input(Pot1);
+ 	mSpeed = (int) ((1.0 - Input(Pot2)) * 20) + 1;
+ 	mLen   = (int) (Input(Pot3)*50) + 1;
 	mOffset++;
 }
 
