@@ -1,36 +1,42 @@
-.) download and flash BBB 
-	a.) go to http://elinux.org/BeagleBoardDebian#eMMC:_BeagleBone_Black
-	b.) wget https://rcn-ee.net/deb/flasher/wheezy/BBB-eMMC-flasher-debian-7.5-console-armhf-2014-07-06-2gb.img.xz
-	c.) follow instructions on a.) 
+1. download and flash BBB 
+  1. go to http://elinux.org/BeagleBoardDebian#eMMC:_BeagleBone_Black
+  2. wget https://rcn-ee.net/deb/flasher/wheezy/BBB-eMMC-flasher-debian-7.5-console-armhf-2014-07-06-2gb.img.xz
+  3. follow instructions on web page 
 
-1.) get the BBB on the internet via eth0 
-	a.) change /etc/network/interfaces for static IP vs dhcp
+2. Get the BBB on the internet via eth0 
+  1. change /etc/network/interfaces for static IP vs dhcp
 
-2.) login as root 
+3. Login as root / root
 
-3.) Set Time/Date so that apt-get/git etc. works (otherwise its set to the future)
-	a.) dpkg-reconfigure tzdata
-	b.) ntpdate pool.ntp.org
+4. Set Time/Date so that apt-get/git etc. works (otherwise its set to the future)
+  1. dpkg-reconfigure tzdata
+  2. ntpdate pool.ntp.org
 
-4.) update apt and install make/gcc/etc
-	a.) apt-get update
-	b.) apt-get upgrade
-	c.) apt-get install build-essential
+5. Update apt and install make/gcc/etc
+  1. apt-get update
+  2. apt-get upgrade
+  3. apt-get install build-essential
 
-5.) install flask
-           a.) apt-get install python-pip
-	b.) pip install Flask
+6. Install flask
+  1. apt-get install python-pip
+  2. pip install Flask
 
-5.) git clone https://github.com/MFornander/kingjelly.git /opt/git/kingjelly
-6.) cd /opt/git/kingjelly;make
+7. Clone kingjelly
+  1. git clone https://github.com/MFornander/kingjelly.git /opt/git/kingjelly
+  2. cd /opt/git/kingjelly/Release
+  3. make
 
+8. Clone LEDscape
+  1. git clone https://github.com/Yona-Appletree/LEDscape.git /opt/git/LEDscape
+  2. cd /opt/git/LEDscape
+  3. make
 
-7) git clone https://github.com/Yona-Appletree/LEDscape.git /opt/git/LEDscape
-8.) cd /opt/git/LEDscape; make
+9. Run install script
+  1. cd /opt/git/kingjelly/scripts
+  2. ./install.sh
 
-	
-9.) cd /opt/git/kingjelly/scripts
-10.) ./install.sh
+10. Enable UART5
+  1. Modify /boot/uEnv.txt such that the command line reads: "cmdline=quiet init=/lib/systemd/systemd capemgr.enable_partno=BB-UART"
 
-11.) reboot
-
+11. Reboot
+  1. reboot -f
