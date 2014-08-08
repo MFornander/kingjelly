@@ -10,7 +10,8 @@ BaseEffect* OriginalRainEffect::Create() {
 }
 
 OriginalRainEffect::OriginalRainEffect() :
-		totalTime(0.0) {
+	totalTime(4) {
+
 	for (int dropIndex = 0; dropIndex < kMaxDropCount; ++dropIndex) {
 		mDrops[dropIndex].birth = 0;
 		mDrops[dropIndex].tail = 0;

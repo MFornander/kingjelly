@@ -14,11 +14,11 @@ private:
 
 	struct RainDrop
 	{
-		uint32_t birth;
+		float birth;
 		uint8_t strip;
 		float hue;
 		float saturation;
-		uint8_t tail;
+		float tail;
 	};
 
 	struct Hsv {
