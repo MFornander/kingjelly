@@ -4,13 +4,13 @@ import socket
 
 app = Flask(__name__)
 
-value = [0,0,0,0,0]
+value = [0,0,0,0,0,0,0,0]
 
 def sendPacket():
     HOST = 'localhost'    # The remote host
     PORT = 30000              # The same port as used by the server
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    msg = pack('!?BBBB', *value) 
+    msg = pack('!????BBBB', *value) 
     s.sendto(msg,(HOST, PORT))
     s.close
     #print value
@@ -23,10 +23,31 @@ def Index():
 
 # ajax GET call this function to set state
 # depending on the GET parameter sent
-@app.route("/_switch")
-def _switch():
+@app.route("/_left")
+def _switch_left():
     state = request.args.get('state')
     value[0] = int(state)
+    sendPacket()
+    return ""
+    
+@app.route("/_right")
+def _switch_right():
+    state = request.args.get('state')
+    value[1] = int(state)
+    sendPacket()
+    return ""
+
+@app.route("/_up")
+def _switch_up():
+    state = request.args.get('state')
+    value[2] = int(state)
+    sendPacket()
+    return ""
+
+@app.route("/_down")
+def _switch_down():
+    state = request.args.get('state')
+    value[3] = int(state)
     sendPacket()
     return ""
 
@@ -34,28 +55,28 @@ def _switch():
 @app.route("/_pot0")
 def _pot0():
     state = request.args.get('state')
-    value[1] = int(state)
+    value[4] = int(state)
     sendPacket()
     return ""
 
 @app.route("/_pot1")
 def _pot1():
     state = request.args.get('state')
-    value[2] = int(state)
+    value[5] = int(state)
     sendPacket()
     return ""
 
 @app.route("/_pot2")
 def _pot2():
     state = request.args.get('state')
-    value[3] = int(state)
+    value[6] = int(state)
     sendPacket()
     return ""
 
 @app.route("/_pot3")
 def _pot3():
     state = request.args.get('state')
-    value[4] = int(state)
+    value[7] = int(state)
     sendPacket()
     return ""
 
