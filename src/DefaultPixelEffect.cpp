@@ -6,14 +6,19 @@ BaseEffect* DefaultPixelEffect::Create() {
 }
 
 DefaultPixelEffect::DefaultPixelEffect() :
-		mCycle(0), ledPositionBasedOnMCycle(1 / (2 * M_PI)), verticalPosition(0) {
+		mCycle(0), ledPositionBasedOnMCycle(1 / (2 * M_PI)), verticalPosition(0), color(0.5) {
+	cout << "Starting DefaultPixelEffect\n";
 }
 
 void DefaultPixelEffect::beginFrame(const FrameInfo& frame) {
-	const float speed = 1.0f; // Input(0) * 4.0f;
-	mCycle = fmodf(mCycle + frame.timeDelta * speed, 2 * M_PI); //cycles between 0-2pi based on speed
+	color = Input(Pot1);
+	acceleration = Input(Pot2);
+
+	mCycle = fmodf(mCycle + frame.timeDelta * 4.0f, 2 * M_PI); //cycles between 0-2pi based on speed
 	verticalPosition = mCycle * ledPositionBasedOnMCycle;
 	//cout << verticalPosition << "\n";
+	//cout << "color: " << color << "\n";
+	//cout << "acceleration: " << acceleration << "\n";
 
 }
 
@@ -25,8 +30,6 @@ void DefaultPixelEffect::shader(Vec3& rgb, const PixelInfo& pixel) const {
 	int led = jp.Led();
 	//float verticalPosition = mCycle * ledPositionBasedOnMCycle;
 	//cout << "Strand: " << strand << ". LED: " << led << "\n";
-	if (led == (int) (verticalPosition * 100))
-		hsv2rgb(rgb, 0.5, 1.0, 1.0 - verticalPosition);
-//	else
-//		hsv2rgb(rgb, 1.0, 1.0, 1.0);
+	if (led == (int) (verticalPosition * 100 * (1.0f + acceleration)))
+		hsv2rgb(rgb, color, 1.0, 1.0 - verticalPosition);
 }

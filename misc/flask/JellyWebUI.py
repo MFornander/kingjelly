@@ -26,14 +26,14 @@ def Index():
 @app.route("/_left")
 def _switch_left():
     state = request.args.get('state')
-    value[0] = int(state)
+    value[1] = int(state)
     sendPacket()
     return ""
     
 @app.route("/_right")
 def _switch_right():
     state = request.args.get('state')
-    value[1] = int(state)
+    value[0] = int(state)
     sendPacket()
     return ""
 

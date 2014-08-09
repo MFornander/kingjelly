@@ -17,4 +17,6 @@ private:
 	float mCycle;
     float ledPositionBasedOnMCycle;
     float verticalPosition;
+    float color;
+    float acceleration = 0.0f;
 };
