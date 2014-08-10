@@ -7,40 +7,40 @@ CPP_SRCS += \
 ../src/AutoController.cpp \
 ../src/BaseController.cpp \
 ../src/BaseEffect.cpp \
-../src/DefaultPixelEffect.cpp \
 ../src/EffectManager.cpp \
 ../src/EffectMattias.cpp \
 ../src/KingJelly.cpp \
 ../src/NetworkController.cpp \
 ../src/OriginalRainEffect.cpp \
 ../src/RainEffect.cpp \
-../src/SerialController.cpp 
+../src/SerialController.cpp \
+../src/SparkleMotionEffect.cpp 
 
 OBJS += \
 ./src/AutoController.o \
 ./src/BaseController.o \
 ./src/BaseEffect.o \
-./src/DefaultPixelEffect.o \
 ./src/EffectManager.o \
 ./src/EffectMattias.o \
 ./src/KingJelly.o \
 ./src/NetworkController.o \
 ./src/OriginalRainEffect.o \
 ./src/RainEffect.o \
-./src/SerialController.o 
+./src/SerialController.o \
+./src/SparkleMotionEffect.o 
 
 CPP_DEPS += \
 ./src/AutoController.d \
 ./src/BaseController.d \
 ./src/BaseEffect.d \
-./src/DefaultPixelEffect.d \
 ./src/EffectManager.d \
 ./src/EffectMattias.d \
 ./src/KingJelly.d \
 ./src/NetworkController.d \
 ./src/OriginalRainEffect.d \
 ./src/RainEffect.d \
-./src/SerialController.d 
+./src/SerialController.d \
+./src/SparkleMotionEffect.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

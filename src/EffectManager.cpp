@@ -1,7 +1,7 @@
 #include "EffectManager.h"
 #include "EffectMattias.h"
 #include "RainEffect.h"
-#include "DefaultPixelEffect.h"
+#include "SparkleMotionEffect.h"
 #include "OriginalRainEffect.h"
 
 EffectManager::EffectManager() :
@@ -12,7 +12,7 @@ EffectManager::EffectManager() :
 
 	// Add each effect's create method to our factory
 	mEffectFactory.push_back(OriginalRainEffect::Create);
-	mEffectFactory.push_back(DefaultPixelEffect::Create);
+	mEffectFactory.push_back(SparkleMotionEffect::Create);
 	mEffectFactory.push_back(PerlinRainbow::Create);
 	mEffectFactory.push_back(RainEffect::Create);
 	mEffectFactory.push_back(ColorFlow::Create);
