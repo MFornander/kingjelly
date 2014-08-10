@@ -8,6 +8,8 @@ EffectManager::EffectManager() :
 	mCurrentIndex(0),
 	mCurrentEffect(nullptr)
 {
+	mEffectFactory.push_back(Fire::Create);
+
 	// Add each effect's create method to our factory
 	mEffectFactory.push_back(OriginalRainEffect::Create);
 	mEffectFactory.push_back(DefaultPixelEffect::Create);
@@ -15,6 +17,11 @@ EffectManager::EffectManager() :
 	mEffectFactory.push_back(RainEffect::Create);
 	mEffectFactory.push_back(ColorFlow::Create);
 	mEffectFactory.push_back(Glitter::Create);
+	mEffectFactory.push_back(Water::Create);
+	mEffectFactory.push_back(Bounce::Create);
+	mEffectFactory.push_back(Swirl::Create);
+	mEffectFactory.push_back(SinusSnake::Create);
+	mEffectFactory.push_back(Fire::Create);
 	// Add new effects here at the end to keep this list merge-easy
 
 	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();

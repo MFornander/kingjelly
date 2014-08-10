@@ -105,3 +105,9 @@ int main(int argc, char** argv)
 
 	return 0;
 }
+
+// Needed for SVL error checking
+Void _Assert(Int condition, const Char* errorMessage, const Char* file, Int line)
+{
+	__assert(errorMessage, file, line);
+}

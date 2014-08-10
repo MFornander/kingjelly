@@ -37,6 +37,9 @@ protected:
 	/// Return true if the given input was non-zero last call and zero this call
 	bool InputClicked(EInput index);
 
+	/// Control ioValue with JoyUp/JoyDown and bound it to min/max
+	void InputJoystick(int32_t& ioValue, int32_t min, int32_t max);
+
 	// FIELDS
 	vector<float> mCurrentInputs;
 	vector<bool>  mLastDown;
@@ -57,9 +60,20 @@ public:
 	uint32_t Strand() const { return static_cast<uint32_t>(mJellyInfo.quot); }
 	uint32_t Led() const    { return static_cast<uint32_t>(mJellyInfo.rem); }
 
+	/// LED's location on a 2D plane if the strands were laid out radially with a radius of 1
+	Vec2 Radial() const;
+
+	/// LED's location on a 2D plane if the strands were laid out flat as a square with length 1
+	Vec2 Square() const;
+
 private:
 	const ldiv_t mJellyInfo;
 };
+
+// Helper macros and functions for debugging
+#define LVAL(a) " " #a "=" << (a)
+inline ostream& operator<<(ostream& os, const Vec2& vec) { return os << '[' << vec[0] << ',' << vec[1] << ']'; }
+inline ostream& operator<<(ostream& os, const Vec3& vec) { return os << '[' << vec[0] << ',' << vec[1] << ',' << vec[2] << ']'; }
 
 /// Macro to reduce code duplication since most effect declarations look the same
 #define EFFECT(name) \
