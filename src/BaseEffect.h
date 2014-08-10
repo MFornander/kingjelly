@@ -1,7 +1,11 @@
 #pragma once
 #include "KingJelly.h"
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
 #include "lib/effect.h"
 #include "lib/color.h"
+#pragma GCC diagnostic pop
 
 /**
  * Base class for all KingJelly effects.
