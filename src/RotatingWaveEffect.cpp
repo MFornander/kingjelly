@@ -6,7 +6,7 @@ BaseEffect* RotatingWaveEffect::Create() {
 }
 
 RotatingWaveEffect::RotatingWaveEffect() :
-		totalTime(0.0), color(0.5) {
+		color(0.5), totalTime(0.0)  {
 }
 
 void RotatingWaveEffect::beginFrame(const FrameInfo& frame) {

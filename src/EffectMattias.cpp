@@ -336,7 +336,7 @@ void Particles::shader(Vec3& rgb, const PixelInfo& pixel) const
 	Vec2 location = JellyPixel(pixel).Radial() * 2.1f;
 	for (int32_t index = 0; index < mCount; ++index)
 	{
-		Vec3 color;
+		Vec3 color(vl_zero);
 		hsv2rgb(color, mHueStart + mHueRange / mCount * index, 0.7f, 1.0f);
 		rgb += color * ((1.0f + mSize + index / 10.0f ) / 20.0f / len(location - Vec2(
 				sin(mTime) + sin(mTime * sTimeFactor[index]),
