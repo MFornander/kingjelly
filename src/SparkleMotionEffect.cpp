@@ -1,20 +1,20 @@
-#include "DefaultPixelEffect.h"
+#include "SparkleMotionEffect.h"
 #include "lib/color.h"
 
-BaseEffect* DefaultPixelEffect::Create() {
-	return new DefaultPixelEffect();
+BaseEffect* SparkleMotionEffect::Create() {
+	return new SparkleMotionEffect();
 }
 
-DefaultPixelEffect::DefaultPixelEffect() :
+SparkleMotionEffect::SparkleMotionEffect() :
 		mCycle(0), ledPositionBasedOnMCycle(1 / (2 * M_PI)), verticalPosition(
 				0), color(0.5) {
-	//cout << "Starting DefaultPixelEffect\n";
+	//cout << "Starting SparkleMotionEffect\n";
 }
 
-void DefaultPixelEffect::beginFrame(const FrameInfo& frame) {
+void SparkleMotionEffect::beginFrame(const FrameInfo& frame) {
 	color = Input(Pot1);
 	scatter = Input(Pot2);
-	int scatterMax = (int) (scatter * 25.0f + 1.0f);
+	int scatterMax = (int) (scatter * 99.0f + 1.0f);
 
 	mCycle = fmodf(mCycle + frame.timeDelta * 4.0f, 2 * M_PI); //cycles between 0-2pi based on speed
 	verticalPosition = mCycle * ledPositionBasedOnMCycle;
@@ -28,7 +28,7 @@ void DefaultPixelEffect::beginFrame(const FrameInfo& frame) {
 			uint32_t thisPosition = (uint32_t) ((vertIntSquared / 100) + scatterPixels);
 			if (led == thisPosition) {
 //				cout << "thisPosition: " << thisPosition << " vertInt: " << vertInt << "\n";
-				pixels[strand][led].h = color + scatterPixels / 100.0f;
+				pixels[strand][led].h = color + (scatterPixels / 400.0f);
 				pixels[strand][led].s = 1.0f;
 				pixels[strand][led].v = (-0.8f * vertIntSquared / 10000.0f)
 						+ 1.0f;
@@ -46,7 +46,7 @@ void DefaultPixelEffect::beginFrame(const FrameInfo& frame) {
 
 }
 
-void DefaultPixelEffect::shader(Vec3& rgb, const PixelInfo& pixel) const {
+void SparkleMotionEffect::shader(Vec3& rgb, const PixelInfo& pixel) const {
 
 	JellyPixel jp = JellyPixel(pixel);
 

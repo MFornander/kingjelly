@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseEffect.h"
 
-class DefaultPixelEffect: public BaseEffect {
+class SparkleMotionEffect: public BaseEffect {
 public:
 	static BaseEffect* Create();  // Required factory method for all effects
 
@@ -9,7 +9,7 @@ public:
 	virtual void shader(Vec3& rgb, const PixelInfo& pixel) const; // Called once per LED
 
 private:
-	DefaultPixelEffect(); // Private ctor forcing factory-only contruction
+	SparkleMotionEffect(); // Private ctor forcing factory-only contruction
 
 	// FIELDS
 	float mCycle;
