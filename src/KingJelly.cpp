@@ -1,11 +1,14 @@
 #include "KingJelly.h"
-#include "lib/effect_runner.h"
 #include "NetworkController.h"
 #include "SerialController.h"
 #include "AutoController.h"
 #include "EffectManager.h"
 #include "BaseEffect.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
+#include "lib/effect_runner.h"
+#pragma GCC diagnostic pop
 
 // Detect releasing button
 bool ReleaseButton(const BaseController& controller, uint32_t buttonIndex)
@@ -109,5 +112,6 @@ int main(int argc, char** argv)
 // Needed for SVL error checking
 Void _Assert(Int condition, const Char* errorMessage, const Char* file, Int line)
 {
+	std::cerr << LVAL(condition) << std::endl;
 	__assert(errorMessage, file, line);
 }

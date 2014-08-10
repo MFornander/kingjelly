@@ -1,5 +1,5 @@
 #include "BaseEffect.h"
-#include <math.h>"
+#include <math.h>
 
 BaseEffect::BaseEffect() :
 	mCurrentInputs(kInputCount),
