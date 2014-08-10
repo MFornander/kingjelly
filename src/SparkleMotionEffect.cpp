@@ -19,7 +19,6 @@ void SparkleMotionEffect::beginFrame(const FrameInfo& frame) {
 	mCycle = fmodf(mCycle + frame.timeDelta * 4.0f, 2 * M_PI); //cycles between 0-2pi based on speed
 	verticalPosition = mCycle * ledPositionBasedOnMCycle;
 
-
 	uint32_t vertInt = verticalPosition * 100;
 	uint32_t vertIntSquared = vertInt * vertInt;
 	for (uint32_t strand = 0; strand < JellyPixel::kStrandCount; strand++) {
@@ -47,15 +46,7 @@ void SparkleMotionEffect::beginFrame(const FrameInfo& frame) {
 }
 
 void SparkleMotionEffect::shader(Vec3& rgb, const PixelInfo& pixel) const {
-
 	JellyPixel jp = JellyPixel(pixel);
-
-	/*	int led = jp.Led();
-	 if (led == (int) (verticalPosition * 100 * (1.0f + acceleration)))
-	 hsv2rgb(rgb, color, 1.0, 1.0 - verticalPosition);
-	 */
-	//
 	Hsv hsv = pixels[jp.Strand()][jp.Led()];
-
 	hsv2rgb(rgb, hsv.h, hsv.s, hsv.v);
 }

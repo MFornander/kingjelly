@@ -3,6 +3,7 @@
 #include "RainEffect.h"
 #include "SparkleMotionEffect.h"
 #include "OriginalRainEffect.h"
+#include "RotatingWaveEffect.h"
 
 EffectManager::EffectManager() :
 	mCurrentIndex(0),

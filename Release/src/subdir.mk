@@ -13,6 +13,7 @@ CPP_SRCS += \
 ../src/NetworkController.cpp \
 ../src/OriginalRainEffect.cpp \
 ../src/RainEffect.cpp \
+../src/RotatingWaveEffect.cpp \
 ../src/SerialController.cpp \
 ../src/SparkleMotionEffect.cpp 
 
@@ -26,6 +27,7 @@ OBJS += \
 ./src/NetworkController.o \
 ./src/OriginalRainEffect.o \
 ./src/RainEffect.o \
+./src/RotatingWaveEffect.o \
 ./src/SerialController.o \
 ./src/SparkleMotionEffect.o 
 
@@ -39,6 +41,7 @@ CPP_DEPS += \
 ./src/NetworkController.d \
 ./src/OriginalRainEffect.d \
 ./src/RainEffect.d \
+./src/RotatingWaveEffect.d \
 ./src/SerialController.d \
 ./src/SparkleMotionEffect.d 
 
