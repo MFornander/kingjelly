@@ -13,6 +13,7 @@ mEffectFactory.push_back(Particles::Create);
 
 	// Add each effect's create method to our factory
 	mEffectFactory.push_back(OriginalRainEffect::Create);
+	mEffectFactory.push_back(RotatingWaveEffect::Create);
 	mEffectFactory.push_back(SparkleMotionEffect::Create);
 	mEffectFactory.push_back(PerlinRainbow::Create);
 	mEffectFactory.push_back(RainEffect::Create);
