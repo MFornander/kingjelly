@@ -10,6 +10,7 @@ public:
 
 private:
 	RotatingWaveEffect(); // Private ctor forcing factory-only contruction
+	float interpolate(float a, float b, float distance);
 
 	// FIELDS
 	float color;
