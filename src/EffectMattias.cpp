@@ -311,3 +311,35 @@ void Fire::shader(Vec3& rgb, const PixelInfo& pixel) const
 //	cout << LVAL(rgb) << endl;
 }
 
+
+// --- Particles ---
+Particles::Particles() :
+	mTime(0),
+	mCount(3),
+	mSize(4),
+	mHueRange(0.5f),
+	mHueStart(0.5f)
+{}
+
+void Particles::beginFrame(const FrameInfo& frame)
+{
+	mTime += frame.timeDelta;
+	InputJoystick(mCount, 1, kMaxCount);
+	mSize = Input(Pot1) * 8.0f;
+	mHueRange = Input(Pot2);
+	mHueStart = Input(Pot3);
+}
+
+void Particles::shader(Vec3& rgb, const PixelInfo& pixel) const
+{
+	static float sTimeFactor[kMaxCount] = {1.1, 1.7, 2.1, 2.5, 3.6, 4.2, 4.4};
+	Vec2 location = JellyPixel(pixel).Radial() * 2.0f;
+	for (int32_t index = 0; index < mCount; ++index)
+	{
+		Vec3 color;
+		hsv2rgb(color, mHueStart + mHueRange / mCount * index, 0.7f, 1.0f);
+		rgb += color * ((1.0f + mSize) / 20.0f / len(location - Vec2(
+				sin(mTime) + sin(mTime * sTimeFactor[index]),
+				cos(mTime) + cos(mTime * sTimeFactor[index]))));
+	}
+}

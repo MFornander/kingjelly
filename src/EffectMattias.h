@@ -61,3 +61,13 @@ EFFECT(Fire)
 	Vec3    mLowLight;
 };
 
+EFFECT(Particles)
+	float    mTime;
+	int32_t  mCount;
+	float    mSize;
+	float    mHueRange;
+	float    mHueStart;
+
+	static const int32_t kMaxCount = 7;
+};
+
