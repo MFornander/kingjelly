@@ -1,9 +1,7 @@
 #pragma once
 #include "BaseEffect.h"
 
-
-class DefaultPixelEffect : public BaseEffect
-{
+class DefaultPixelEffect: public BaseEffect {
 public:
 	static BaseEffect* Create();  // Required factory method for all effects
 
@@ -15,8 +13,21 @@ private:
 
 	// FIELDS
 	float mCycle;
-    float ledPositionBasedOnMCycle;
-    float verticalPosition;
-    float color;
-    float acceleration = 0.0f;
+	float ledPositionBasedOnMCycle;
+	float verticalPosition;
+	float color;
+	float scatter;
+
+	struct Hsv {
+		Hsv() :
+				h(0.0f), s(0.0f), v(0.0f) {
+		}
+		float h;
+		float s;
+		float v;
+	};
+
+	Hsv pixels[JellyPixel::kStrandCount][JellyPixel::kLedCount];
+
+	float totalTime;
 };
