@@ -8,8 +8,6 @@ EffectManager::EffectManager() :
 	mCurrentIndex(0),
 	mCurrentEffect(nullptr)
 {
-	mEffectFactory.push_back(Fire::Create);
-
 	// Add each effect's create method to our factory
 	mEffectFactory.push_back(OriginalRainEffect::Create);
 	mEffectFactory.push_back(SparkleMotionEffect::Create);
