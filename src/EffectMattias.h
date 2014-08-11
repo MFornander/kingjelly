@@ -32,17 +32,6 @@ EFFECT(Water)
 	float   mHue;
 };
 
-/// IN PROGRESS
-/// HSV rings bouncing with bounded controllable hue range
-EFFECT(Bounce)
-	float   mTime;
-	float   mSpread;
-	float   mHue;
-	float   mHueRange;
-};
-
-/// IN PROGRESS
-///
 EFFECT(Swirl)
 	float   mTime;
 	float   mGrain;
@@ -69,5 +58,11 @@ EFFECT(Particles)
 	float    mHueStart;
 
 	static const int32_t kMaxCount = 7;
+};
+
+EFFECT(Beacon)
+	float  mTime;
+	float  mSize;
+	float  mBand;
 };
 

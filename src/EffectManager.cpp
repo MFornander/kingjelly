@@ -9,8 +9,6 @@ EffectManager::EffectManager() :
 	mCurrentIndex(0),
 	mCurrentEffect(nullptr)
 {
-mEffectFactory.push_back(Particles::Create);
-
 	// Add each effect's create method to our factory
 	mEffectFactory.push_back(OriginalRainEffect::Create);
 	mEffectFactory.push_back(RotatingWaveEffect::Create);
@@ -20,11 +18,11 @@ mEffectFactory.push_back(Particles::Create);
 	mEffectFactory.push_back(ColorFlow::Create);
 	mEffectFactory.push_back(Glitter::Create);
 	mEffectFactory.push_back(Water::Create);
-//	mEffectFactory.push_back(Bounce::Create);  // Disabled, in progress
 	mEffectFactory.push_back(Swirl::Create);
 	mEffectFactory.push_back(SinusSnake::Create);
 	mEffectFactory.push_back(Fire::Create);
 	mEffectFactory.push_back(Particles::Create);
+	mEffectFactory.push_back(Beacon::Create);
 	// Add new effects here at the end to keep this list merge-easy
 
 	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();

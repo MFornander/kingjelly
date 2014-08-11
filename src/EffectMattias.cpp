@@ -127,35 +127,6 @@ void Water::shader(Vec3& rgb, const PixelInfo& pixel) const
 }
 
 
-// --- Bounce ---
-Bounce::Bounce() :
-	mTime(0),
-	mSpread(0),
-	mHue(0),
-	mHueRange(0)
-{}
-
-void Bounce::beginFrame(const FrameInfo& frame)
-{
-	mTime += frame.timeDelta;
-}
-
-float Ring(float time, const Vec2& pos)
-{
-	return sin( cos(time/4.0f) + 1.2f * cos(time) * len(pos) * 8.0f);
-}
-
-void Bounce::shader(Vec3& rgb, const PixelInfo& pixel) const
-{
-	Vec2 location = JellyPixel(pixel).Radial();
-
-	rgb = Vec3(
-		Ring(mTime,  location/1.2f),
-		0.5f + Ring(mTime, location/1.3f - Vec2().MakeBlock(0.3f * sin(mTime * 0.9f))),
-		0.3f + Ring(mTime, location/1.5f + Vec2().MakeBlock(0.2f * sin(mTime))));
-}
-
-
 // --- Swirl ---
 Swirl::Swirl() :
 	mTime(0),
@@ -343,3 +314,27 @@ void Particles::shader(Vec3& rgb, const PixelInfo& pixel) const
 				cos(mTime) + cos(mTime * sTimeFactor[index]))));
 	}
 }
+
+
+// --- Beacon ---
+Beacon::Beacon() :
+	mTime(0),
+	mSize(4),
+	mBand(0.5f)
+{}
+
+void Beacon::beginFrame(const FrameInfo& frame)
+{
+	mTime += frame.timeDelta * 2.0f;;
+	mSize = 1.0f + Input(Pot1) * 12.0f;
+	mBand = Input(Pot2);
+}
+
+void Beacon::shader(Vec3& rgb, const PixelInfo& pixel) const
+{
+	Vec2 location = JellyPixel(pixel).Square();
+	float dy = mSize / (100.0f * abs((location[1] - mBand) * sin(mTime)) + 0.01f);
+
+	rgb = Vec3(0.1f * dy * dy, 0.5f * dy, dy);
+}
+
