@@ -10,6 +10,12 @@ RotatingWaveEffect::RotatingWaveEffect() :
 }
 
 void RotatingWaveEffect::beginFrame(const FrameInfo& frame) {
+	totalTime += frame.timeDelta;
+
+	Hsv topColor = { 0.0f, 0.0f, 0.0f };
+	Hsv topWaveColor = { 0.0f, 1.0f, 1.0f };
+	Hsv bottomWaveColor = { 0.13f, 1.0f, 1.0f };
+	Hsv bottomColor = { 0.13f, 0.0f, 0.0f };
 
 	//reset all pixels
 	for (uint32_t strand = 0; strand < JellyPixel::kStrandCount; strand++) {
@@ -20,10 +26,8 @@ void RotatingWaveEffect::beginFrame(const FrameInfo& frame) {
 		}
 	}
 
-	totalTime += frame.timeDelta;
-
-	float topWavePeriod = 0.1f + Input(Pot1);
-	float bottomWavePeriod = 0.1f + Input(Pot2);
+	float topWavePeriod = 0.1f + ( 1.0f - Input(Pot1));
+	float bottomWavePeriod = 0.1f + ( 1.0f - Input(Pot2));
 
 	float topWavePosition = totalTime / topWavePeriod;
 	float bottomWavePosition = totalTime / bottomWavePeriod;
@@ -35,13 +39,38 @@ void RotatingWaveEffect::beginFrame(const FrameInfo& frame) {
 		int bottomWaveY =
 				(int) (74 + (sin(bottomWavePosition + offset) * 25.0f));
 
-		pixels[strand][topWaveY].h = 0.0f;
-		pixels[strand][topWaveY].s = 1.0f;
-		pixels[strand][topWaveY].v = 1.0f;
+		pixels[strand][topWaveY] = topWaveColor;
+		pixels[strand][bottomWaveY] = bottomWaveColor;
 
-		pixels[strand][bottomWaveY].h = 0.5f;
-		pixels[strand][bottomWaveY].s = 1.0f;
-		pixels[strand][bottomWaveY].v = 1.0f;
+		for (float gradientY = 0.0f; gradientY < topWaveY; gradientY++) {
+			float distance = gradientY / ((float) topWaveY);
+			Hsv interpolatedColor = interpolate(topColor, topWaveColor,
+					distance);
+//			cout << "topWaveY: " << topWaveY << " gradientY: " << gradientY << " distance: " << distance << " interpolatedColor: " << interpolatedColor << "\n";
+			pixels[strand][(int) gradientY] = interpolatedColor;
+		}
+
+		for (float gradientY = topWaveY + 1; gradientY < bottomWaveY;
+				gradientY++) {
+			float distance = (gradientY - topWaveY) / (bottomWaveY - topWaveY);
+			Hsv interpolatedColor = interpolate(topWaveColor, bottomWaveColor,
+					distance);
+			//			cout << "topWaveY: " << topWaveY << " gradientY: " << gradientY << " distance: " << distance << " interpolatedColor: " << interpolatedColor << "\n";
+			pixels[strand][(int) gradientY] = interpolatedColor;
+
+//		 jellyImage.setColor((int) gradientY, (int) i, topWaveColor.interpolate(bottomWaveColor, (gradientY - topWaveY) / (bottomWaveY - topWaveY)));
+		}
+
+		for (float gradientY = bottomWaveY + 1; gradientY < JellyPixel::kLedCount; gradientY++) {
+			float distance = (gradientY - bottomWaveY)
+					/ (100.0f - bottomWaveY);
+			Hsv interpolatedColor = interpolate(bottomWaveColor, bottomColor, distance);
+			//			cout << "bottomWaveY: " << bottomWaveY << " gradientY: " << gradientY << " distance: " << distance << " interpolatedSat: " << interpolatedColor.s << "\n";
+			pixels[strand][(int) gradientY] = interpolatedColor;
+
+			// jellyImage.setColor((int) gradientY, (int) i, bottomWaveColor.interpolate(bottomColor, (gradientY - bottomWaveY) / (_100 - bottomWaveY)));
+		}
+
 	}
 }
 
@@ -52,3 +81,14 @@ void RotatingWaveEffect::shader(Vec3& rgb, const PixelInfo& pixel) const {
 
 	hsv2rgb(rgb, hsv.h, hsv.s, hsv.v);
 }
+
+float RotatingWaveEffect::interpolateFloat(float a, float b, float distance) {
+	if (a == b) {
+		return a;
+	}
+	if (a > b) {
+		return a - ((a - b) * distance);
+	}
+	return a + ((b - a) * distance);
+}
+
