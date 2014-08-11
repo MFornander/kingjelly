@@ -15,9 +15,8 @@ private:
 	RainEffect();
 
 	// FIELDS
-	uint32_t mOffset;
+	double   mOffset;
 	float    mHue;
-	uint32_t mSpeed;
 	uint32_t mMod;
 	int32_t  mLen;
 };
