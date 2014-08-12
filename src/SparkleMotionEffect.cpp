@@ -1,13 +1,13 @@
 #include "SparkleMotionEffect.h"
 #include "lib/color.h"
 
-BaseEffect* SparkleMotionEffect::Create() {
-	return new SparkleMotionEffect();
-}
-
 SparkleMotionEffect::SparkleMotionEffect() :
-		mCycle(0), ledPositionBasedOnMCycle(1 / (2 * M_PI)), verticalPosition(
-				0), color(0.5) {
+		mCycle(0),
+		ledPositionBasedOnMCycle(1 / (2 * M_PI)),
+		verticalPosition(0),
+		color(0.5),
+		scatter(0),
+		totalTime(0) {
 	//cout << "Starting SparkleMotionEffect\n";
 }
 

@@ -1,17 +1,7 @@
 #pragma once
 #include "BaseEffect.h"
 
-class OriginalRainEffect : public BaseEffect
-{
-public:
-	static BaseEffect* Create();
-
-	virtual void beginFrame(const FrameInfo& frame);
-	virtual void shader(Vec3& rgb, const PixelInfo& pixel) const;
-
-private:
-	OriginalRainEffect();
-
+EFFECT(0000, OriginalRainEffect)
 	struct RainDrop
 	{
 		float birth;

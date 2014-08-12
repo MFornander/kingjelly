@@ -25,3 +25,11 @@ bool BaseController::IsEnabled() const
 {
 	return mEnabled;
 }
+
+string BaseController::GetNextTag(bool reset)
+{
+	string tag = mNextEffectTag;
+	if (reset)
+		mNextEffectTag.clear();
+	return tag;
+}

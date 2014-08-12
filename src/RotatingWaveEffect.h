@@ -1,21 +1,9 @@
 #pragma once
 #include "BaseEffect.h"
 
-class RotatingWaveEffect: public BaseEffect {
-public:
-	static BaseEffect* Create();  // Required factory method for all effects
-
-	virtual void beginFrame(const FrameInfo& frame); // Called once per frame
-	virtual void shader(Vec3& rgb, const PixelInfo& pixel) const; // Called once per LED
-
-private:
-	RotatingWaveEffect(); // Private ctor forcing factory-only contruction
-
-	// FIELDS
+EFFECT(D001, RotatingWaveEffect)
 	float color;
-
 	float interpolateFloat(float a, float b, float distance);
-
 	float totalTime;
 
 	struct Hsv {

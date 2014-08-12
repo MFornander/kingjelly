@@ -19,8 +19,8 @@ public:
 	EffectManager();
 	~EffectManager();
 
-	// Set the JellyEffect with the indicated index to active
-	void ActivateEffect(uint32_t index);
+	// Set the JellyEffect with the indicated tag to active
+	void SelectEffect(const string& tag);
 
 	// Convenience method switching to next effect or wraps to zero
 	void NextEffect(bool backwards);
@@ -29,9 +29,11 @@ public:
 	BaseEffect& GetActiveInstance() const;
 
 private:
-	typedef BaseEffect* (*MakeEffect)();
+	void SetActiveInstance(BaseEffect* effect);
 
-	uint32_t             mCurrentIndex;     // Index of current JellyEffect instance
-	BaseEffect*          mCurrentEffect;    // Current JellyEffect instance, never nullptr
-	vector<MakeEffect>   mEffectFactory;    // List of factory methods that creates JellyEffects
+	uint32_t       mCurrentIndex;          // Current effect index in factor
+	BaseEffect*    mCurrentEffect;         // Current JellyEffect instance, never nullptr
+	typedef BaseEffect* (*MakeEffect)();
+	typedef pair<string,MakeEffect> EffectEntry;
+	vector<EffectEntry>  mEffectFactory;  // Map of factory methods that creates JellyEffects
 };

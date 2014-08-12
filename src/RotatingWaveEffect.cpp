@@ -1,10 +1,6 @@
 #include "RotatingWaveEffect.h"
 #include "lib/color.h"
 
-BaseEffect* RotatingWaveEffect::Create() {
-	return new RotatingWaveEffect();
-}
-
 RotatingWaveEffect::RotatingWaveEffect() :
 		color(0.5), totalTime(0.0)  {
 }

@@ -4,11 +4,6 @@
 #include "KingJelly.h"
 #include "OriginalRainEffect.h"
 
-BaseEffect* OriginalRainEffect::Create() {
-
-	return new OriginalRainEffect();
-}
-
 OriginalRainEffect::OriginalRainEffect() :
 	totalTime(4) {
 

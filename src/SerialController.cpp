@@ -46,21 +46,24 @@ void SerialController::Update(uint32_t seconds, bool verbose)
 void SerialController::ExecuteCommand(const string& command)
 {
 	char channel;
-	int value;
-	if (sscanf(command.c_str(), "%c%d", &channel, &value) != 2)
+	char value[20] = {0};
+	if (sscanf(command.c_str(), "%c%19s", &channel, value) != 2)
 		return;
 
 	// Lowercase commands are analog inputs
 	if (channel >= 'a' && channel <= 'd')
-		mAnalog[channel - 'a'] = max(0.0f, min(1.0f, static_cast<float>(value) / 100.0f));
+		mAnalog[channel - 'a'] = max(0.0f, min(1.0f, static_cast<float>(atoi(value)) / 100.0f));
 
 	// Uppercase commands are digital inputs
 	else if (channel >= 'A' && channel <= 'D')
-		mDigital[channel - 'A'] = (value != 0);
+		mDigital[channel - 'A'] = (value[0] != '0');
 
 	// Command ':' is the "enable" digital input
 	else if (channel == ':')
-		mEnabled = value != 0;
+		mEnabled = value[0] != '0';
+
+	else if (channel == '=')
+		mNextEffectTag = value;
 
 	// Report strange commands to debug easier
 	else

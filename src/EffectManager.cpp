@@ -1,31 +1,37 @@
 #include "EffectManager.h"
+#include "BaseEffect.h"
 #include "EffectMattias.h"
 #include "RainEffect.h"
 #include "SparkleMotionEffect.h"
 #include "OriginalRainEffect.h"
 #include "RotatingWaveEffect.h"
 
+
 EffectManager::EffectManager() :
 	mCurrentIndex(0),
 	mCurrentEffect(nullptr)
+
 {
+	#define ADD_EFFECT(name) mEffectFactory.emplace_back(name::StaticTag(), name::Create);
+
 	// Add each effect's create method to our factory
-	mEffectFactory.push_back(OriginalRainEffect::Create);
-	mEffectFactory.push_back(RotatingWaveEffect::Create);
-	mEffectFactory.push_back(SparkleMotionEffect::Create);
-	mEffectFactory.push_back(PerlinRainbow::Create);
-	mEffectFactory.push_back(RainEffect::Create);
-	mEffectFactory.push_back(ColorFlow::Create);
-	mEffectFactory.push_back(Glitter::Create);
-	mEffectFactory.push_back(Water::Create);
-	mEffectFactory.push_back(Swirl::Create);
-	mEffectFactory.push_back(SinusSnake::Create);
-	mEffectFactory.push_back(Fire::Create);
-	mEffectFactory.push_back(Particles::Create);
-	mEffectFactory.push_back(Beacon::Create);
+	ADD_EFFECT(OriginalRainEffect)
+	ADD_EFFECT(RotatingWaveEffect)
+	ADD_EFFECT(SparkleMotionEffect)
+	ADD_EFFECT(PerlinRainbow)
+	ADD_EFFECT(RainEffect)
+	ADD_EFFECT(ColorFlow)
+	ADD_EFFECT(Glitter)
+	ADD_EFFECT(Water)
+	ADD_EFFECT(Swirl)
+	ADD_EFFECT(SinusSnake)
+	ADD_EFFECT(Fire)
+	ADD_EFFECT(Particles)
+	ADD_EFFECT(Beacon)
 	// Add new effects here at the end to keep this list merge-easy
 
-	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();
+	// Instantiate the default effect
+	SelectEffect("0000");
 }
 
 EffectManager::~EffectManager()
@@ -34,20 +40,40 @@ EffectManager::~EffectManager()
 	mCurrentEffect = nullptr;
 }
 
-void EffectManager::ActivateEffect(uint32_t index)
+void EffectManager::SelectEffect(const string& tag)
 {
-	if (index == mCurrentIndex)
+	// Skip if we're already on this effect
+	if (mCurrentEffect != nullptr && tag == mCurrentEffect->Tag())
+		return;
+
+	// Find the entry with the indicated tag
+	auto iter = find_if(mEffectFactory.begin(), mEffectFactory.end(),
+		[&tag](const EffectEntry& entry) { return entry.first == tag; });
+	if (iter == mEffectFactory.end())
 		return;
 
 	delete mCurrentEffect;
-	mCurrentIndex = index % mEffectFactory.size();
-	mCurrentEffect = mEffectFactory.at(mCurrentIndex)();
+	mCurrentEffect = iter->second();
+	mCurrentIndex = iter - mEffectFactory.begin();
 }
 
 void EffectManager::NextEffect(bool backwards)
 {
-	uint32_t offset = backwards ? mEffectFactory.size() - 1 : 1;
-	ActivateEffect(mCurrentIndex + offset);
+	mCurrentIndex += backwards ? mEffectFactory.size() - 1 : 1;
+	mCurrentIndex = mCurrentIndex % mEffectFactory.size();
+
+	delete mCurrentEffect;
+	mCurrentEffect = mEffectFactory.at(mCurrentIndex).second();
+
+}
+
+void EffectManager::SetActiveInstance(BaseEffect* effect)
+{
+	if (effect == mCurrentEffect || effect == nullptr)
+		return;
+
+	fprintf(stdout, "New Effect: %s\n", effect->FullName().c_str());
+	mCurrentEffect = effect;
 }
 
 BaseEffect& EffectManager::GetActiveInstance() const

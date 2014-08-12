@@ -9,8 +9,4 @@ class AutoController: public BaseController
 public:
 	AutoController();
 	virtual void Update(uint32_t seconds, bool verbose);
-
-private:
-	static float GetRandomAnalogValue();
-	uint32_t mLastSwitchTime;
 };

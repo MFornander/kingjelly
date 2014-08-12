@@ -25,12 +25,22 @@ public:
 	};
 
 	/// Input setter used by main loop to transfer controller data
-	/// TODO: refactor with less hardcoded counts
 	void SetInput(EInput index, float value);
 
-	/// Print out all inputs every second in verbose mode
+	/// OPTIONAL: Called every second in verbose mode
 	virtual void debug(const DebugInfo& info);
 
+	/// REQUIRED: Called once per frame
+	virtual void beginFrame(const FrameInfo& frame) = 0;
+
+	/// REQUIRED: Called once per LED
+	virtual void shader(Vec3& rgb, const PixelInfo& pixel) const = 0;
+
+	/// Return the full name of effect (implemented by EFFECT macro)
+	virtual const string FullName() const = 0;
+
+	/// Return the fourcc tag of effect (implemented by EFFECT macro)
+	virtual const string Tag() const = 0;
 
 protected:
 	BaseEffect();
@@ -44,6 +54,7 @@ protected:
 	/// Control ioValue with JoyUp/JoyDown and bound it to min/max
 	void InputJoystick(int32_t& ioValue, int32_t min, int32_t max);
 
+private:
 	// FIELDS
 	vector<float> mCurrentInputs;
 	vector<bool>  mLastDown;
@@ -74,18 +85,18 @@ private:
 	const ldiv_t mJellyInfo;
 };
 
-// Helper macros and functions for debugging
-#define LVAL(a) " " #a "=" << (a)
-inline ostream& operator<<(ostream& os, const Vec2& vec) { return os << '[' << vec[0] << ',' << vec[1] << ']'; }
-inline ostream& operator<<(ostream& os, const Vec3& vec) { return os << '[' << vec[0] << ',' << vec[1] << ',' << vec[2] << ']'; }
 
 /// Macro to reduce code duplication since most effect declarations look the same
-#define EFFECT(name) \
+#define EFFECT(tag, name) \
 class name : public BaseEffect \
 { \
 public: \
-	static BaseEffect* Create() { return new name(); }             /* Required factory method for all effects */ \
-	virtual void beginFrame(const FrameInfo& frame);               /* Called once per frame */ \
-	virtual void shader(Vec3& rgb, const PixelInfo& pixel) const;  /* Called once per LED */ \
+	static const string    StaticTag()       { return #tag; } \
+	static BaseEffect*     Create()          { return new name(); }       /* Required factory method for all effects */ \
+	virtual const string   Tag() const       { return StaticTag(); }             /* Return the four char tag of effect */ \
+	virtual const string   FullName() const  { return  #tag "-" #name; }  /* Return the full name of effect */ \
+	virtual void beginFrame(const FrameInfo& frame);                      /* Called once per frame */ \
+	virtual void shader(Vec3& rgb, const PixelInfo& pixel) const;         /* Called once per LED */ \
 private: \
-	name();  /* Private ctor forcing factory-only contruction */
+	name();  /* Private ctor forcing factory-only contruction */ \
+	static_assert(sizeof(#tag) == 5, "Tag must be a four char string such as M001 or B123");

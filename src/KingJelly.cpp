@@ -78,9 +78,12 @@ int main(int argc, char** argv)
 		BaseController& controller = GetController(runner.isVerbose());
 
 		// Switch to next or previous effect?
-		if (ReleaseButton(controller, 0)) // left joystick = prev effect
+		string nextEffectTag = controller.GetNextTag();
+		if (!nextEffectTag.empty())
+			manager.SelectEffect(nextEffectTag);
+		else if (ReleaseButton(controller, 0)) // left joystick = prev effect
 			manager.NextEffect(false);
-		if (ReleaseButton(controller, 1)) // right joystick = next effect
+		else if (ReleaseButton(controller, 1)) // right joystick = next effect
 			manager.NextEffect(true);
 
 		BaseEffect& activeEffect = manager.GetActiveInstance();
@@ -95,10 +98,10 @@ int main(int argc, char** argv)
 		activeEffect.SetInput(BaseEffect::JoyUp, controller.Digital(2));
 		activeEffect.SetInput(BaseEffect::JoyDown, controller.Digital(3));
 
-		// Change speed based on analog 0, clamp close to middle values to 0.5
+		// Change speed based on analog 0 but always have some speed to reduce dead animation states
 		float speed = controller.Analog(0);
-		if (speed >= 0.45f && speed <= 0.55f)
-			speed = 0.5f;
+		if (speed == 0)
+			speed = 0.05f;
 		runner.setSpeed(speed * 2.0f);
 
 		// Draw effect frame
@@ -112,6 +115,16 @@ int main(int argc, char** argv)
 // Needed for SVL error checking
 Void _Assert(Int condition, const Char* errorMessage, const Char* file, Int line)
 {
-	std::cerr << LVAL(condition) << std::endl;
+	std::cerr << LVAL(condition) << LVAL(condition) << LVAL(file) << LVAL(line) << std::endl;
 	__assert(errorMessage, file, line);
+}
+
+ostream& operator<<(ostream& os, const Vec2& vec)
+{
+	return os << '[' << vec[0] << ',' << vec[1] << ']';
+}
+
+ostream& operator<<(ostream& os, const Vec3& vec)
+{
+	return os << '[' << vec[0] << ',' << vec[1] << ',' << vec[2] << ']';
 }

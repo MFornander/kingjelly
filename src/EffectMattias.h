@@ -2,7 +2,7 @@
 #include "BaseEffect.h"
 
 /// TODO
-EFFECT(PerlinRainbow)
+EFFECT(M001, PerlinRainbow)
 	float mCycle;
 	float mSaturation;
 	float mVerticalOffset;
@@ -11,20 +11,20 @@ EFFECT(PerlinRainbow)
 /**
  * Independently control the motion of Red, Green, and Blue noise
  * with the three pots.  Up and down controls the noise level. */
-EFFECT(ColorFlow)
+EFFECT(M002, ColorFlow)
 	int32_t mPerlinOctaves;
 	float   mPosition[3];
 };
 
 /// IN PROGRESS
-EFFECT(Glitter)
+EFFECT(M003, Glitter)
 	uint32_t mChance;
 	float    mCycle;
 	float    mBrightness;
 };
 
 /// Overlay of 2D sine patterns
-EFFECT(Water)
+EFFECT(M004, Water)
 	float   mTime;
 	int32_t mIterations;
 	float   mSize;
@@ -32,25 +32,25 @@ EFFECT(Water)
 	float   mHue;
 };
 
-EFFECT(Swirl)
+EFFECT(M005, Swirl)
 	float   mTime;
 	float   mGrain;
 	float   mHue1;
 	float   mHue2;
 };
 
-EFFECT(SinusSnake)
+EFFECT(M006, SinusSnake)
 	float   mTime;
 };
 
-EFFECT(Fire)
+EFFECT(M007, Fire)
 	float   mTime;
 	float   mScale;
 	Vec3    mHighLight;
 	Vec3    mLowLight;
 };
 
-EFFECT(Particles)
+EFFECT(M008, Particles)
 	float    mTime;
 	int32_t  mCount;
 	float    mSize;
@@ -60,7 +60,7 @@ EFFECT(Particles)
 	static const int32_t kMaxCount = 7;
 };
 
-EFFECT(Beacon)
+EFFECT(M009, Beacon)
 	float  mTime;
 	float  mSize;
 	float  mBand;

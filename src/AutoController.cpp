@@ -3,11 +3,8 @@
 #include <ctime>
 
 AutoController::AutoController() :
-	BaseController("Auto"),
-	mLastSwitchTime(0)
+	BaseController("Auto")
 {
-	std::srand(static_cast<unsigned int>(std::time(0)));
-
 	mAnalog[0] = 0.5f;
 	mAnalog[1] = 0.5f;
 	mAnalog[2] = 0.5f;
@@ -19,33 +16,10 @@ AutoController::AutoController() :
 	mDigital[3] = false;
 }
 
-void AutoController::Update(uint32_t seconds, bool verbose)
+void AutoController::Update(uint32_t /*seconds*/, bool /*verbose*/)
 {
 	// Disable switching effects for now to stay at the first
 	// effect on boot with no controller attached.
+	mNextEffectTag = "0000";
 	return;
-
-	const uint32_t kSecondsBetweenSwitch = 60;
-
-	if ((seconds - mLastSwitchTime) > kSecondsBetweenSwitch)
-	{
-		mLastSwitchTime = seconds;
-
-		mDigital[0] = true;
-		for (int index = 0; index < 4; ++index)
-			mAnalog[index] = GetRandomAnalogValue();
-
-		if (verbose)
-			fprintf(stdout, "AutoController: Switch to new effect with analog: (%.2f, %.2f, %.2f, %.2f)\n", mAnalog[0], mAnalog[1], mAnalog[2], mAnalog[3]);
-	}
-	else
-	{
-		mDigital[0] = false;
-	}
-}
-
-
-float AutoController::GetRandomAnalogValue()
-{
-	return 0.1f + 0.8f * static_cast<float>(std::rand()) / RAND_MAX;
 }
