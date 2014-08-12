@@ -43,7 +43,7 @@ EffectManager::~EffectManager()
 void EffectManager::SelectEffect(const string& tag)
 {
 	// Skip if we're already on this effect
-	if (mCurrentEffect != nullptr && tag == mCurrentEffect->Tag())
+	if (mCurrentEffect != nullptr && mCurrentEffect->Tag() == tag)
 		return;
 
 	// Find the entry with the indicated tag
@@ -52,19 +52,16 @@ void EffectManager::SelectEffect(const string& tag)
 	if (iter == mEffectFactory.end())
 		return;
 
-	delete mCurrentEffect;
-	mCurrentEffect = iter->second();
 	mCurrentIndex = iter - mEffectFactory.begin();
+	SetActiveInstance(iter->second());
+
 }
 
 void EffectManager::NextEffect(bool backwards)
 {
 	mCurrentIndex += backwards ? mEffectFactory.size() - 1 : 1;
 	mCurrentIndex = mCurrentIndex % mEffectFactory.size();
-
-	delete mCurrentEffect;
-	mCurrentEffect = mEffectFactory.at(mCurrentIndex).second();
-
+	SetActiveInstance(mEffectFactory.at(mCurrentIndex).second());
 }
 
 void EffectManager::SetActiveInstance(BaseEffect* effect)
@@ -73,6 +70,7 @@ void EffectManager::SetActiveInstance(BaseEffect* effect)
 		return;
 
 	fprintf(stdout, "New Effect: %s\n", effect->FullName().c_str());
+	delete mCurrentEffect;
 	mCurrentEffect = effect;
 }
 

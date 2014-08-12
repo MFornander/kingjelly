@@ -37,7 +37,7 @@ void SerialController::Update(uint32_t seconds, bool verbose)
 	{
 		command[readCount] = 0;
 		if (verbose)
-			fprintf(stdout, "SerialController: Command = %s", command);
+			fprintf(stdout, "SerialController command: %s", command);
 		ExecuteCommand(command);
 		mLastCommandTime = seconds;
 	}
@@ -67,6 +67,6 @@ void SerialController::ExecuteCommand(const string& command)
 
 	// Report strange commands to debug easier
 	else
-		fprintf(stderr, "BaseController illegal command: '%s'\n", command.c_str());
+		fprintf(stdout, "BaseController illegal command: '%s'\n", command.c_str());
 }
 
