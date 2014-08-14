@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 SerialController::SerialController(const string& serialDevicePath) :
 	BaseController("Serial"),
