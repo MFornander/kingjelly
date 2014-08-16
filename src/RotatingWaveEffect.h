@@ -2,7 +2,10 @@
 #include "BaseEffect.h"
 
 EFFECT(D001, RotatingWaveEffect)
-	float color;
+	static const int maxWaves = 10;
+	int waveCount;
+	float wavePeriods[maxWaves];
+
 	float interpolateFloat(float a, float b, float distance);
 	float totalTime;
 
@@ -22,6 +25,8 @@ EFFECT(D001, RotatingWaveEffect)
 	//Hsv interpolate(Hsv a, Hsv b, float distance);
 
 	Hsv pixels[JellyPixel::kStrandCount][JellyPixel::kLedCount];
+	Hsv waveColors[maxWaves];
+
 
 	Hsv interpolate(Hsv a, Hsv b, float distance) {
 		Hsv result = Hsv();

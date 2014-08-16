@@ -1,19 +1,28 @@
 #include "RotatingWaveEffect.h"
+#include "lib/noise.h"
 #include "lib/color.h"
 
 RotatingWaveEffect::RotatingWaveEffect() :
-		color(0.5), totalTime(0.0)  {
+		totalTime(0.0), waveCount(2) {
+
+	for (int i = 0; i < maxWaves; i++) {
+		wavePeriods[i] = (random() % 40) / 100.0f + 0.5f;
+//		cout << "wavePeriod " << i << ": " << wavePeriods[i] << "\n";
+	}
+
 }
 
 void RotatingWaveEffect::beginFrame(const FrameInfo& frame) {
 	totalTime += frame.timeDelta;
 
-	Hsv topColor = { 0.0f, 0.0f, 0.0f };
-	Hsv topWaveColor = { 0.0f, 1.0f, 1.0f };
-	Hsv bottomWaveColor = { 0.13f, 1.0f, 1.0f };
-	Hsv bottomColor = { 0.13f, 0.0f, 0.0f };
+	if (InputClicked(JoyUp))
+		if (waveCount < 9)
+			waveCount++;
+	if (InputClicked(JoyDown))
+		if (waveCount > 1)
+			waveCount--;
 
-	//reset all pixels
+//reset all pixels
 	for (uint32_t strand = 0; strand < JellyPixel::kStrandCount; strand++) {
 		for (uint32_t led = 0; led < JellyPixel::kLedCount; led++) {
 			pixels[strand][led].h = 0.0f;
@@ -22,51 +31,49 @@ void RotatingWaveEffect::beginFrame(const FrameInfo& frame) {
 		}
 	}
 
-	float topWavePeriod = 0.1f + ( 1.0f - Input(Pot1));
-	float bottomWavePeriod = 0.1f + ( 1.0f - Input(Pot2));
+	float baseColor = Input(Pot1);
+	float increment = (Input(Pot2) + 0.1f) / 3.0f / waveCount;
+	for (int i = 0; i < waveCount; i++) {
+		waveColors[i] = Hsv(baseColor + i * increment, 1.0f, 1.0f);
+	}
 
-	float topWavePosition = totalTime / topWavePeriod;
-	float bottomWavePosition = totalTime / bottomWavePeriod;
+	int tailCount = 14 - waveCount; // (int) (Input(Pot3) * 10.0f);
+	//cout << "tailCount: " << tailCount << "\n";
 
 	for (uint32_t strand = 0; strand < JellyPixel::kStrandCount; strand++) {
 		float offset = ((2 * M_PI) / JellyPixel::kStrandCount) * strand;
 
-		int topWaveY = (int) (24 + (sin(topWavePosition + offset) * 25.0f));
-		int bottomWaveY =
-				(int) (74 + (sin(bottomWavePosition + offset) * 25.0f));
+		for (int i = 0; i < waveCount; i++) {
+			float wavePosition = totalTime / wavePeriods[i];
 
-		pixels[strand][topWaveY] = topWaveColor;
-		pixels[strand][bottomWaveY] = bottomWaveColor;
+			int divider = (100 / (waveCount + 1));
+			float upOrDown = cos(wavePosition + offset);
 
-		for (float gradientY = 0.0f; gradientY < topWaveY; gradientY++) {
-			float distance = gradientY / ((float) topWaveY);
-			Hsv interpolatedColor = interpolate(topColor, topWaveColor,
-					distance);
-//			cout << "topWaveY: " << topWaveY << " gradientY: " << gradientY << " distance: " << distance << " interpolatedColor: " << interpolatedColor << "\n";
-			pixels[strand][(int) gradientY] = interpolatedColor;
+			int waveY = (int) (divider + (i * divider)
+					+ (sin(wavePosition + offset) * divider));
+
+			//		cout << "waveY: " << waveY << " upOrDown: " << upOrDown << "\n";
+
+			Hsv thisColor = waveColors[i];
+			pixels[strand][waveY] = thisColor;
+
+			float fadeIncr = 0.9f / tailCount;
+			if (upOrDown > 0.15) { //led is on its way up in numbers/down the jelly
+				for (int j = 0; j < tailCount; j++) {
+					if (waveY - j > 0) {
+						pixels[strand][waveY - j] = Hsv(thisColor.h,
+								thisColor.s, 1.0f - fadeIncr - fadeIncr * j);
+					}
+				}
+			} else if (upOrDown < -0.15) { //led is on its way down in numbers/up the jelly
+				for (int j = 0; j < tailCount; j++) {
+					if (waveY + j < JellyPixel::kLedCount) {
+						pixels[strand][waveY + j] = Hsv(thisColor.h,
+								thisColor.s, 1.0f - fadeIncr - fadeIncr * j);
+					}
+				}
+			}
 		}
-
-		for (float gradientY = topWaveY + 1; gradientY < bottomWaveY;
-				gradientY++) {
-			float distance = (gradientY - topWaveY) / (bottomWaveY - topWaveY);
-			Hsv interpolatedColor = interpolate(topWaveColor, bottomWaveColor,
-					distance);
-			//			cout << "topWaveY: " << topWaveY << " gradientY: " << gradientY << " distance: " << distance << " interpolatedColor: " << interpolatedColor << "\n";
-			pixels[strand][(int) gradientY] = interpolatedColor;
-
-//		 jellyImage.setColor((int) gradientY, (int) i, topWaveColor.interpolate(bottomWaveColor, (gradientY - topWaveY) / (bottomWaveY - topWaveY)));
-		}
-
-		for (float gradientY = bottomWaveY + 1; gradientY < JellyPixel::kLedCount; gradientY++) {
-			float distance = (gradientY - bottomWaveY)
-					/ (100.0f - bottomWaveY);
-			Hsv interpolatedColor = interpolate(bottomWaveColor, bottomColor, distance);
-			//			cout << "bottomWaveY: " << bottomWaveY << " gradientY: " << gradientY << " distance: " << distance << " interpolatedSat: " << interpolatedColor.s << "\n";
-			pixels[strand][(int) gradientY] = interpolatedColor;
-
-			// jellyImage.setColor((int) gradientY, (int) i, bottomWaveColor.interpolate(bottomColor, (gradientY - bottomWaveY) / (_100 - bottomWaveY)));
-		}
-
 	}
 }
 
