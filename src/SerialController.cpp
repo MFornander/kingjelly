@@ -23,8 +23,6 @@ void SerialController::Update(uint32_t seconds, bool verbose)
 	ssize_t readCount = read(mFileDescriptor, command, 255);
 	if (readCount <= 0)
 	{
-// Only require 5 sec pings in Release
-#ifndef DEBUG
 		// Disable if no data was received in 10 seconds
 		const uint32_t kSecondsUntilDisable = 10;
 		if ((seconds - mLastCommandTime) >= kSecondsUntilDisable && mEnabled)
@@ -32,7 +30,6 @@ void SerialController::Update(uint32_t seconds, bool verbose)
 			mEnabled = false;
 			fprintf(stdout, "SerialController: Disable after %d secs\n", kSecondsUntilDisable);
 		}
-#endif
 	}
 	else
 	{

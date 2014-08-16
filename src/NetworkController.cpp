@@ -59,9 +59,9 @@ void NetworkController::Update(uint32_t /*seconds*/, bool verbose) {
 		memcpy(&data, buf, n);
 
 		if (verbose) {
-			printf("Received %d bytes\n", n);
-			printf("%d %d %d %d %d\n", data.left, data.pot0, data.pot1, data.pot2,
-					data.pot3);
+			printf("Received %d bytes\n:%d %d %d %d %d %d %d %d\n", n,
+					data.left, data.right, data.up, data.down,
+					data.pot0, data.pot1, data.pot2, data.pot3);
 		}
 
 		mDigital[0] = data.left;
