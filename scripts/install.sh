@@ -3,7 +3,7 @@
 set -e
 
 ## Verify debian installation
-EXPECTED="Linux beaglebone 3.8.13-bone47 #1 SMP Fri Apr 11 01:36:09 UTC 2014 armv7l GNU/Linux"
+EXPECTED="Linux arm 3.8.13-bone59 #1 SMP Fri Jul 4 22:52:56 UTC 2014 armv7l GNU/Linux"
 ACTUAL="`uname -a`"
 
 if [ "$EXPECTED" != "$ACTUAL" ]
@@ -14,15 +14,27 @@ fi
  
 
 ## Replace the DTB to enable PRUs
-cp -n /boot/uboot/dtbs/am335x-boneblack.dtb /boot/uboot/dtbs/am335x-boneblack.dtb.old
-cp debian-3.8.13-bone47.dtb /boot/uboot/dtbs/am335x-boneblack.dtb
+cp -n /boot/dtbs/3.8.13-bone59/am335x-boneblack.dtb /boot/dtbs/3.8.13-bone59/am335x-boneblack.dtb.old
+cp debian-3.8.13-bone59.dtb /boot/dtbs/3.8.13-bone59/am335x-boneblack.dtb
+
+## Copy network config
+cp -n interfaces /etc/network/interfaces
 
 ## Install and autostart opc-server (LEDscape OPC server using PRUs)
-cp opc /etc/init.d/
-update-rc.d opc defaults
+cp ledscape-service /etc/init.d/
+update-rc.d ledscape-service defaults
 
-## Install and autostart jellybrain (custom OPC client and frame producer)
-cp jellyservice /etc/init.d/
-update-rc.d jellyservice defaults
+## Install and autostart kingjelly-service (custom OPC client and frame producer)
+cp kingjelly-service /etc/init.d/
+update-rc.d kingjelly-service defaults
 
-echo "Reboot to enable PRUs and awaken the KingJelly'
+## Disable Apache2 so we can use flask. There are 2 warnings during disable which 
+## can be ignored
+update-rc.d apache2 disable
+
+## Install and autostart flask
+cp flask-service /etc/init.d/
+update-rc.d flask-service defaults
+
+echo "Reboot to enable PRUs and awaken the KingJelly"
+
