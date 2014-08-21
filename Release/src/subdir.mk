@@ -15,7 +15,8 @@ CPP_SRCS += \
 ../src/RainEffect.cpp \
 ../src/RotatingWaveEffect.cpp \
 ../src/SerialController.cpp \
-../src/SparkleMotionEffect.cpp 
+../src/SparkleMotionEffect.cpp \
+../src/SpiralEffect.cpp 
 
 OBJS += \
 ./src/AutoController.o \
@@ -29,7 +30,8 @@ OBJS += \
 ./src/RainEffect.o \
 ./src/RotatingWaveEffect.o \
 ./src/SerialController.o \
-./src/SparkleMotionEffect.o 
+./src/SparkleMotionEffect.o \
+./src/SpiralEffect.o 
 
 CPP_DEPS += \
 ./src/AutoController.d \
@@ -43,7 +45,8 @@ CPP_DEPS += \
 ./src/RainEffect.d \
 ./src/RotatingWaveEffect.d \
 ./src/SerialController.d \
-./src/SparkleMotionEffect.d 
+./src/SparkleMotionEffect.d \
+./src/SpiralEffect.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

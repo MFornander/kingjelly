@@ -5,6 +5,7 @@
 #include "SparkleMotionEffect.h"
 #include "OriginalRainEffect.h"
 #include "RotatingWaveEffect.h"
+#include "SpiralEffect.h"
 
 
 EffectManager::EffectManager() :
@@ -18,6 +19,7 @@ EffectManager::EffectManager() :
 	ADD_EFFECT(OriginalRainEffect)
 	ADD_EFFECT(RotatingWaveEffect)
 	ADD_EFFECT(SparkleMotionEffect)
+	ADD_EFFECT(SpiralEffect)
 	ADD_EFFECT(PerlinRainbow)
 	ADD_EFFECT(RainEffect)
 	ADD_EFFECT(ColorFlow)
