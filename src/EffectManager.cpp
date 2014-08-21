@@ -30,9 +30,6 @@ EffectManager::EffectManager() :
 	ADD_EFFECT(Particles)
 	ADD_EFFECT(Beacon)
 	// Add new effects here at the end to keep this list merge-easy
-
-	// Instantiate the default effect
-	SelectEffect("0000");
 }
 
 EffectManager::~EffectManager()
@@ -55,7 +52,6 @@ void EffectManager::SelectEffect(const string& tag)
 
 	mCurrentIndex = iter - mEffectFactory.begin();
 	SetActiveInstance(iter->second());
-
 }
 
 void EffectManager::NextEffect(bool backwards)
@@ -75,7 +71,11 @@ void EffectManager::SetActiveInstance(BaseEffect* effect)
 	mCurrentEffect = effect;
 }
 
-BaseEffect& EffectManager::GetActiveInstance() const
+BaseEffect& EffectManager::GetActiveInstance()
 {
+	// Instantiate the default effect
+	if (!mCurrentEffect)
+		SelectEffect("0000");
+
 	return *mCurrentEffect;
 }

@@ -26,7 +26,7 @@ public:
 	void NextEffect(bool backwards);
 
 	// Fetch the current JellyEffect instance
-	BaseEffect& GetActiveInstance() const;
+	BaseEffect& GetActiveInstance();
 
 private:
 	void SetActiveInstance(BaseEffect* effect);
@@ -35,5 +35,5 @@ private:
 	BaseEffect*    mCurrentEffect;         // Current JellyEffect instance, never nullptr
 	typedef BaseEffect* (*MakeEffect)();
 	typedef pair<string,MakeEffect> EffectEntry;
-	vector<EffectEntry>  mEffectFactory;  // Map of factory methods that creates JellyEffects
+	vector<EffectEntry>  mEffectFactory;  // Map of factory methods that create JellyEffects
 };
