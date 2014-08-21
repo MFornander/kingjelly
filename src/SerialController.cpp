@@ -28,7 +28,7 @@ void SerialController::Update(uint32_t seconds, bool verbose)
 		if ((seconds - mLastCommandTime) >= kSecondsUntilDisable && mEnabled)
 		{
 			mEnabled = false;
-			fprintf(stdout, "SerialController: Disable after %d secs\n", kSecondsUntilDisable);
+			fprintf(stdout, "SerialController: Disable after %d sec of inactivity\n", kSecondsUntilDisable);
 		}
 	}
 	else

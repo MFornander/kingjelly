@@ -59,7 +59,7 @@ void NetworkController::Update(uint32_t /*seconds*/, bool verbose) {
 		memcpy(&data, buf, n);
 
 		if (verbose) {
-			printf("Received %d bytes\n:%d %d %d %d %d %d %d %d\n", n,
+			printf("Received %d bytes: %d %d %d %d - %d %d %d %d\n", n,
 					data.left, data.right, data.up, data.down,
 					data.pot0, data.pot1, data.pot2, data.pot3);
 		}

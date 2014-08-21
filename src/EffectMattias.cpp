@@ -2,6 +2,7 @@
 #include "lib/noise.h"
 #include "lib/color.h"
 
+
 // --- PerlinRainbow ---
 PerlinRainbow::PerlinRainbow() :
 	mCycle(0),
@@ -14,7 +15,7 @@ void PerlinRainbow::beginFrame(const FrameInfo& frame)
 	const float speed2 = Input(Pot1);
 	mSaturation = Input(Pot2);
 	mCycle = fmodf(mCycle + frame.timeDelta * speed2, 2 * M_PI);
-	mVerticalOffset += Input(Pot3) * 2.0f * frame.timeDelta;
+	mVerticalOffset += Input(Pot3) * frame.timeDelta;
 }
 
 void PerlinRainbow::shader(Vec3& rgb, const PixelInfo& pixel) const
@@ -59,6 +60,7 @@ void ColorFlow::shader(Vec3& rgb, const PixelInfo& pixel) const
 	}
 }
 
+
 // --- GlitterEffect ---
 Glitter::Glitter() :
 	mChance(0.5f),
@@ -81,6 +83,7 @@ void Glitter::shader(Vec3& rgb, const PixelInfo& pixel) const
 	rgb.MakeBlock(value * fbm_noise3(perlinPoint, 3));
 }
 
+
 // --- Water ---
 Water::Water() :
 	mTime(0),
@@ -95,9 +98,9 @@ void Water::beginFrame(const FrameInfo& frame)
 	mTime += frame.timeDelta;
 	InputJoystick(mIterations, 1, 10);
 
-	mSize = 1.0f + Input(Pot1) * 10.0f;
-	mGain = 1.1f + Input(Pot2) / 2.0f;
-	mHue =  Input(Pot3);
+	mSize = 4.0f + Input(Pot1) * 8.0f;
+	mGain = 1.5f + Input(Pot2) / 8.0f;
+	mHue =  0.4f + Input(Pot3) / 4.0f;
 }
 
 void Water::shader(Vec3& rgb, const PixelInfo& pixel) const
@@ -127,51 +130,22 @@ void Water::shader(Vec3& rgb, const PixelInfo& pixel) const
 }
 
 
-// --- Swirl ---
-Swirl::Swirl() :
-	mTime(0),
-	mGrain(0),
-	mHue1(0),
-	mHue2(0)
-{}
-
-void Swirl::beginFrame(const FrameInfo& frame)
-{
-	mTime += frame.timeDelta / 10;
-	mGrain = Input(Pot1);
-	mHue1 = Input(Pot2);
-	mHue2 = Input(Pot3);
-}
-
-void Swirl::shader(Vec3& rgb, const PixelInfo& pixel) const
-{
-	Vec2 location = JellyPixel(pixel).Radial();
-	float x = len(location) * mGrain;
-	float c = pow(2.0f * fabs((x - mTime) - floorf(x - mTime) - 0.5f), 2.0f);
-	c = sin(atan2(location[1], location[0]) + c * M_PI * 4.0f);
-
-	if (mHue1 == 0.0f && mHue2 == 0.0f)
-		hsv2rgb(rgb, 1.0f, 0.0f, c);
-	else if (mHue2 == 0.0f)
-		hsv2rgb(rgb, mHue1, 0.5f, c);
-	else
-		hsv2rgb(rgb, mix(mHue1, mHue2, c), 0.5f, c + 0.3f);
-}
-
-
 // --- SinusSnake ---
 SinusSnake::SinusSnake() :
-	mTime(0)
+	mTime(0),
+	mColorTime(0),
+	mScale(0.6f)
 {}
 
 void SinusSnake::beginFrame(const FrameInfo& frame)
 {
 	mTime += frame.timeDelta;
+	mColorTime += frame.timeDelta * Input(Pot1);
+	mScale = 0.7f + 0.3f * Input(Pot2);
 }
 
-float Band(const Vec2& pos, float amplitude, float frequency, float time)
+float Band(const Vec2& pos, float amplitude, float frequency, float time, float scale)
 {
-	const float scale = 0.8f;
 	float wave = scale * amplitude * sin(1.0f * M_PI * frequency * pos[0] + time) / 5.0f;
 	float light = Clip(amplitude * frequency * 0.02f,
 	                   0.05f + 0.001f / scale,
@@ -182,13 +156,14 @@ float Band(const Vec2& pos, float amplitude, float frequency, float time)
 void SinusSnake::shader(Vec3& rgb, const PixelInfo& pixel) const
 {
 	Vec2 location = JellyPixel(pixel).Square();
-	Vec3 color = Vec3(1.1f + cos(mTime), sin(mTime)+1.2, sin(3.14 * mTime));
+	Vec3 color = Vec3(1.1f + cos(mColorTime), sin(mColorTime)+1.2, sin(3.14 * mColorTime));
 
 	const float time = mTime * 0.7f + location[0] * 10.0f;
-	float spectrum = Band(location, 1.0f * cos(sin(3.14f * time)), sin(cos(3.14f * time)), mTime);
+	float spectrum = Band(location, 1.0f * cos(sin(3.14f * time)), sin(cos(3.14f * time)), mTime, mScale);
 
 	rgb = color * spectrum;
 }
+
 
 // --- Fire ---
 Fire::Fire() :
@@ -199,9 +174,9 @@ Fire::Fire() :
 void Fire::beginFrame(const FrameInfo& frame)
 {
 	mTime += frame.timeDelta;
-	mScale = Input(Pot1) * 10.0f;
-	hsv2rgb(mHighLight, Input(Pot2), 1.0f, 0.7f); // Hard left = red
-	hsv2rgb(mLowLight,  Input(Pot3) + 1.0f / 6, 1.0f, 1.0f); // Hard left = yellow
+	mScale = 5.0f + Input(Pot1) * 5.0f;
+	hsv2rgb(mHighLight, 0,      1.0f, 0.3f + Input(Pot2) * 0.4f);
+	hsv2rgb(mLowLight,  1.0f/6, 1.0f, 0.7f + Input(Pot3) * 0.3f);
 }
 
 float Rand(const Vec2& n)
@@ -286,7 +261,7 @@ void Fire::shader(Vec3& rgb, const PixelInfo& pixel) const
 // --- Particles ---
 Particles::Particles() :
 	mTime(0),
-	mCount(3),
+	mCount(4),
 	mSize(4),
 	mHueRange(0.5f),
 	mHueStart(0.5f)
@@ -296,22 +271,22 @@ void Particles::beginFrame(const FrameInfo& frame)
 {
 	mTime += frame.timeDelta;
 	InputJoystick(mCount, 1, kMaxCount);
-	mSize = Input(Pot1) * 8.0f;
+	mSize = Input(Pot1) * 8.0f / mCount;
 	mHueStart = Input(Pot2);
 	mHueRange = Input(Pot3);
 }
 
 void Particles::shader(Vec3& rgb, const PixelInfo& pixel) const
 {
-	static float sTimeFactor[kMaxCount] = {1.1, 1.7, 2.1, 2.5, 3.6, 4.2, 4.4};
+	static float sTimeFactor[kMaxCount] = {1.1, 1.7, 2.1, 2.5, 3.6, 4.2, 4.4, 4.6, 5.1};
 	Vec2 location = JellyPixel(pixel).Radial() * 2.1f;
 	for (int32_t index = 0; index < mCount; ++index)
 	{
 		Vec3 color(vl_zero);
 		hsv2rgb(color, mHueStart + mHueRange / mCount * index, 0.7f, 1.0f);
 		rgb += color * ((1.0f + mSize + index / 10.0f ) / 20.0f / len(location - Vec2(
-				sin(mTime) + sin(mTime * sTimeFactor[index]),
-				cos(mTime) + cos(mTime * sTimeFactor[index]))));
+			sin(mTime) + sin(mTime * sTimeFactor[index]),
+			cos(mTime) + cos(mTime * sTimeFactor[index]))));
 	}
 }
 
@@ -320,20 +295,24 @@ void Particles::shader(Vec3& rgb, const PixelInfo& pixel) const
 Beacon::Beacon() :
 	mTime(0),
 	mSize(4),
-	mBand(0.5f)
+	mBand(0.5f),
+	mGlowIntensity(0.5f)
 {}
 
 void Beacon::beginFrame(const FrameInfo& frame)
 {
-	mTime += frame.timeDelta * 2.0f;;
-	mSize = 1.0f + Input(Pot1) * 12.0f;
+	mTime += frame.timeDelta;
+	mSize = 0.5f + Input(Pot1) * 5.0f;
 	mBand = Input(Pot2);
+	mGlowIntensity = Input(Pot3);
 }
 
 void Beacon::shader(Vec3& rgb, const PixelInfo& pixel) const
 {
 	Vec2 location = JellyPixel(pixel).Square();
-	float dy = mSize / (100.0f * abs((location[1] - mBand) * sin(mTime)) + 0.01f);
+	float slowBeat = 100.0f * abs((location[1] - mBand) * sin(mTime));
+	float fastBeat = mGlowIntensity * 100.0f * abs((location[1] - mBand) * sin(mTime * 4.0f));
+	float dy = mSize / (slowBeat + fastBeat + 0.01f);
 
 	rgb = Vec3(0.1f * dy * dy, 0.5f * dy, dy);
 }

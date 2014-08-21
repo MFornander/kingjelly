@@ -9,6 +9,7 @@ CPP_SRCS += \
 ../src/BaseEffect.cpp \
 ../src/EffectManager.cpp \
 ../src/EffectMattias.cpp \
+../src/GlitterEffect.cpp \
 ../src/KingJelly.cpp \
 ../src/NetworkController.cpp \
 ../src/OriginalRainEffect.cpp \
@@ -24,6 +25,7 @@ OBJS += \
 ./src/BaseEffect.o \
 ./src/EffectManager.o \
 ./src/EffectMattias.o \
+./src/GlitterEffect.o \
 ./src/KingJelly.o \
 ./src/NetworkController.o \
 ./src/OriginalRainEffect.o \
@@ -39,6 +41,7 @@ CPP_DEPS += \
 ./src/BaseEffect.d \
 ./src/EffectManager.d \
 ./src/EffectMattias.d \
+./src/GlitterEffect.d \
 ./src/KingJelly.d \
 ./src/NetworkController.d \
 ./src/OriginalRainEffect.d \

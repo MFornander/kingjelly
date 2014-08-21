@@ -32,37 +32,33 @@ EFFECT(M004, Water)
 	float   mHue;
 };
 
-EFFECT(M005, Swirl)
+EFFECT(M005, SinusSnake)
 	float   mTime;
-	float   mGrain;
-	float   mHue1;
-	float   mHue2;
+	float   mColorTime;
+	float   mScale;
 };
 
-EFFECT(M006, SinusSnake)
-	float   mTime;
-};
-
-EFFECT(M007, Fire)
+EFFECT(M006, Fire)
 	float   mTime;
 	float   mScale;
 	Vec3    mHighLight;
 	Vec3    mLowLight;
 };
 
-EFFECT(M008, Particles)
+EFFECT(M007, Particles)
 	float    mTime;
 	int32_t  mCount;
 	float    mSize;
 	float    mHueRange;
 	float    mHueStart;
 
-	static const int32_t kMaxCount = 7;
+	static const int32_t kMaxCount = 9;
 };
 
-EFFECT(M009, Beacon)
+EFFECT(M008, Beacon)
 	float  mTime;
 	float  mSize;
 	float  mBand;
+	float  mGlowIntensity;
 };
 
