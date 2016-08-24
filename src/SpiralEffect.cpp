@@ -10,12 +10,13 @@ SpiralEffect::SpiralEffect() :
 
 void SpiralEffect::beginFrame(const FrameInfo& frame) {
 	totalTime += frame.timeDelta;
-	int tailLength = ((Input(Pot1) * 100.0f) / 7.0f) + 1; //max of 15
-	if (tailLength == 8)
-		tailLength++; //weird shit happens here so we eject.
+	int tailLength = 1; //((Input(Pot1) * 100.0f) / 7.0f) + 1; //max of 15
+//	if (tailLength == 8)
+//		tailLength++; //weird shit happens here so we eject.
 
-	float color1 = Input(Pot2);
-	float color2 = Input(Pot3);
+	float hue = Input(Pot1);
+	float sat = Input(Pot2);
+	float val = Input(Pot3);
 
 //reset all pixels
 	for (uint32_t strand = 0; strand < JellyPixel::kStrandCount; strand++) {
@@ -39,12 +40,12 @@ void SpiralEffect::beginFrame(const FrameInfo& frame) {
 			positionAround = (positionAround + 1 + JellyPixel::kStrandCount)
 					% JellyPixel::kStrandCount;
 
-			float distance = tailPixel / (float) tailLength;
-			float thisHue = interpolateFloat(color1, color2, distance);
+			//float distance = tailPixel / (float) tailLength;
+			//float thisHue = interpolateFloat(hue, color2, distance);
 			//cout << "color1: " << color1 << " color2: " << color2
 			//	<< " distance: " << distance << " -> thisHue: " << thisHue
 			//<< "\n";
-			pixels[positionAround][led] = Hsv(thisHue, 1.0f, 1.0f);
+			pixels[positionAround][led] = Hsv(hue, sat, (val / 2.0f) + 0.5f);
 		}
 	}
 

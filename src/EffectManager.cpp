@@ -25,7 +25,7 @@ EffectManager::EffectManager() :
 	ADD_EFFECT(ColorFlow)
 	ADD_EFFECT(Glitter)
 	ADD_EFFECT(Water)
-	ADD_EFFECT(Fire)
+	//ADD_EFFECT(Fire)
 	ADD_EFFECT(SinusSnake)
 	ADD_EFFECT(Particles)
 	ADD_EFFECT(Beacon)
